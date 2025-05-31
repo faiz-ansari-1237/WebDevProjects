@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Sign In</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f3f3f3;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 60px 68px 40px;
+            background-color: rgba(0,0,0,0.75);
+            border-radius: 4px;
+            margin-top: 90px;
+        }
+        
+        h1 {
+            color: #fff;
+            font-size: 32px;
+            margin-bottom: 28px;
+        }
+        
+        h2 {
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        h3 {
+            color: #fff;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        
+        .sign-in-form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .input-group {
+            margin-bottom: 16px;
+        }
+        
+        input {
+            width: 100%;
+            height: 50px;
+            padding: 16px 20px 0;
+            border: none;
+            border-radius: 4px;
+            background: #333;
+            color: #fff;
+            font-size: 16px;
+        }
+        
+        input:focus {
+            background: #454545;
+            outline: none;
+        }
+        
+        button {
+            width: 100%;
+            padding: 16px;
+            background: #e50914;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 24px;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+        
+        .helper-text {
+            color: #b3b3b3;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+        
+        .divider {
+            color: #737373;
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #737373;
+        }
+        
+        .divider::before {
+            margin-right: 16px;
+        }
+        
+        .divider::after {
+            margin-left: 16px;
+        }
+        
+        .sign-in-code {
+            color: #fff;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+            color: #b3b3b3;
+            margin-bottom: 10px;
+        }
+        
+        .remember-me input {
+            width: auto;
+            height: auto;
+            margin-right: 5px;
+        }
+        
+        .sign-up-link {
+            color: #fff;
+            margin-top: 16px;
+        }
+        
+        .recaptcha {
+            color: #8c8c8c;
+            font-size: 13px;
+            margin-top: 30px;
+        }
+        
+        .recaptcha a {
+            color: #0071eb;
+            text-decoration: none;
+        }
+        
+        .footer {
+            background-color: rgba(0,0,0,0.75);
+            color: #737373;
+            padding: 30px 0;
+            margin-top: 90px;
+        }
+        
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 45px;
+        }
+        
+        .contact {
+            margin-bottom: 30px;
+        }
+        
+        .links {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .links a {
+            color: #737373;
+            text-decoration: none;
+            font-size: 13px;
+        }
+        
+        .language-selector {
+            margin-bottom: 20px;
+        }
+        
+        .copyright {
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>NEWS</h1>
+        <h2>CREAM DEMON</h2>
+        <h3>SIGN</h3>
+        
+        <form class="sign-in-form">
+            <div class="input-group">
+                <input type="text" placeholder="Email or mobile number" required>
+            </div>
+            <div class="input-group">
+                <input type="password" placeholder="Password" required>
+            </div>
+            
+            <button type="submit">Sign in</button>
+            
+            <div class="helper-text">OR</div>
+            
+            <div class="sign-in-code">Use a sign-in code</div>
+            <div class="sign-in-code"><strong>Forgot password?</strong></div>
+            
+            <div class="remember-me">
+                <input type="checkbox" id="remember">
+                <label for="remember">Remember me</label>
+            </div>
+            
+            <div class="sign-up-link">New to Netflix?<strong>Sign up now.</strong></div>
+            
+            <div class="recaptcha">
+                This page is protected by Google Inc/APTCHA to ensure you're not a bot. <a href="#">Learn more.</a>
+            </div>
+        </form>
+        
+        <div style="margin-top: 40px;">
+            <h3>EMERGENCY OFFICER</h3>
+            <h3>STRAINCERTHINGS</h3>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <div class="footer-content">
+            <div class="contact">Questions? Call 000-800-919-1743 (Toll-Free)</div>
+            
+            <div class="links">
+                <a href="#">FAQ</a>
+                <a href="#">Help Centre</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">Privacy</a>
+                <a href="#">Cookie Preferences</a>
+                <a href="#">Corporate Information</a>
+            </div>
+            
+            <div class="language-selector">
+                <strong>English</strong>
+            </div>
+            
+            <div class="copyright">
+                This is a recreation for educational purposes only.
+            </div>
+        </div>
+    </div>
+</body>
+</html>

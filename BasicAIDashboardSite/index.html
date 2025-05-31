@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced AI Learning Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Custom scrollbar for better aesthetics, especially in dark mode */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Dark mode scrollbar */
+        body.dark .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1a1a1a; /* Darker track for OG black */
+        }
+        body.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #444; /* Darker thumb for OG black */
+        }
+        body.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #666; /* Darker thumb hover for OG black */
+        }
+
+        /* Ensure smooth transitions for sidebar */
+        .sidebar-panel {
+            transition: width 0.3s ease-in-out, padding 0.3s ease-in-out; /* Add padding to transition */
+            overflow: hidden; /* Hide content that overflows during transition */
+        }
+
+        /* Sidebar collapsed state */
+        .sidebar-panel.collapsed {
+            width: 80px; /* Fixed width for collapsed state */
+            padding-left: 1rem; /* Adjust padding for collapsed state */
+            padding-right: 1rem; /* Adjust padding for collapsed state */
+        }
+        .sidebar-panel.collapsed .sidebar-link span {
+            display: none; /* Hide text when collapsed */
+        }
+        .sidebar-panel.collapsed .sidebar-link {
+            justify-content: center; /* Center icons when text is hidden */
+            padding-left: 0.5rem; /* Adjust padding for centered icon */
+            padding-right: 0.5rem; /* Adjust padding for centered icon */
+        }
+        .sidebar-panel.collapsed .sidebar-link i {
+            margin-right: 0 !important; /* Remove margin from icons */
+        }
+        .sidebar-panel.collapsed .sidebar-promo {
+            display: none; /* Hide promo box when collapsed */
+        }
+        .sidebar-panel.collapsed hr {
+            display: none; /* Hide HR when collapsed */
+        }
+        .sidebar-panel.collapsed h3 {
+            display: none; /* Hide EXPLORE heading when collapsed */
+        }
+
+
+        /* AI-inspired dynamic emphasis */
+        .ai-emphasized {
+            animation: pulse-emphasis 1.5s infinite alternate;
+        }
+
+        @keyframes pulse-emphasis {
+            0% { box-shadow: 0 0 0px rgba(0, 0, 0, 0); }
+            100% { box-shadow: 0 0 15px rgba(100, 100, 255, 0.4); }
+        }
+
+        /* Dark mode specific overrides for a true "OG Black" feel */
+        body.dark {
+            background-color: #0a0a0a; /* Very dark background */
+            color: #e0e0e0; /* Light text for dark mode */
+        }
+        body.dark .bg-white { background-color: #1c1c1c; } /* Darker background for panels, header, sidebar */
+        body.dark .shadow-md { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.24); } /* Stronger, darker shadow */
+        body.dark .border-gray-200 { border-color: #333; } /* Darker borders */
+        body.dark .hover\:bg-gray-100:hover { background-color: #282828; } /* Darker hover for sidebar/buttons */
+        body.dark .text-gray-600 { color: #b0b0b0; } /* Lighter grey for secondary text */
+        body.dark .text-gray-700 { color: #c0c0c0; } /* Lighter grey for primary text */
+        body.dark .bg-blue-500 { background-color: #6366f1; } /* A vibrant blue for dark mode */
+        body.dark .hover\:bg-blue-600:hover { background-color: #4f46e5; }
+        body.dark .bg-gray-50 { background-color: #0a0a0a; } /* Main body background */
+        body.dark .bg-gray-200 { background-color: #333; } /* Category chips */
+        body.dark .text-gray-800 { color: #e0e0e0; } /* Ensure main text is light */
+        body.dark input { background-color: #282828; border-color: #444; color: #e0e0e0; }
+
+        /* Specific dark mode adjustments for some complex elements */
+        body.dark .bg-gradient-to-r.from-blue-100.to-purple-100 {
+            background-image: linear-gradient(to right, #282828, #3a2848); /* Darker gradient for promo */
+        }
+        body.dark .text-blue-600 { color: #6366f1; } /* Ensure blue accents are consistent */
+        body.dark .text-blue-400 { color: #818cf8; } /* Lighter blue for dark mode accents */
+        body.dark .text-green-600 { color: #4CAF50; } /* Green for dark mode */
+        body.dark .text-yellow-500 { color: #FFC107; } /* Yellow for dark mode */
+        body.dark .text-red-500 { color: #F44336; } /* Red for dark mode */
+        body.dark .text-purple-500 { color: #9C27B0; } /* Purple for dark mode */
+        body.dark .text-indigo-500 { color: #673AB7; } /* Indigo for dark mode */
+        body.dark .text-teal-500 { color: #009688; } /* Teal for dark mode */
+        body.dark .text-cyan-500 { color: #00BCD4; } /* Cyan for dark mode */
+
+        /* Light theme aesthetic fixes */
+        body:not(.dark) .bg-gray-50 { background-color: #f9fafb; } /* Slightly lighter background */
+        body:not(.dark) .bg-white { background-color: #ffffff; } /* Pure white for main elements */
+        body:not(.dark) .text-gray-900 { color: #1f2937; } /* Darker text for better contrast */
+        body:not(.dark) .text-gray-800 { color: #1f2937; }
+        body:not(.dark) .text-gray-700 { color: #374151; }
+        body:not(.dark) .text-gray-600 { color: #4b5563; }
+        body:not(.dark) .border-gray-200 { border-color: #e5e7eb; }
+        body:not(.dark) .hover\:bg-gray-100:hover { background-color: #f3f4f6; }
+        body:not(.dark) .bg-gray-200 { background-color: #e5e7eb; } /* Category chips */
+        body:not(.dark) input { background-color: #ffffff; border-color: #d1d5db; color: #1f2937; }
+
+        /* Modal specific styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* Slightly darker overlay */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 24px;
+            border-radius: 12px; /* More rounded corners */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); /* Stronger shadow */
+            width: 90%;
+            max-width: 550px; /* Slightly wider */
+            position: relative;
+            animation: fadeIn 0.3s ease-out;
+        }
+        body.dark .modal-content {
+            background-color: #1e1e1e; /* Darker modal background */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); /* Darker shadow */
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Dropdown specific styles */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%; /* Position below the button */
+            right: 0;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            min-width: 180px;
+            z-index: 999;
+            animation: fadeInScale 0.2s ease-out;
+        }
+        body.dark .dropdown-menu {
+            background-color: #1e1e1e; /* Darker dropdown background */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50 text-gray-900 font-sans flex flex-col custom-scrollbar">
+
+    <header class="flex items-center justify-between p-4 bg-white shadow-md sticky top-0 z-20 rounded-b-lg">
+        <div class="flex items-center">
+            <button id="menu-toggle" class="p-2 rounded-full hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:hover:bg-gray-700" aria-label="Toggle sidebar">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+            <div class="ml-4 text-xl font-bold text-blue-600 dark:text-blue-400">AI Dashboard</div>
+        </div>
+
+        <div class="flex-1 max-w-lg mx-4 hidden md:flex">
+            <input
+                type="text"
+                id="search-input"
+                placeholder="Search resources, topics, or insights..."
+                class="flex-1 p-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                aria-label="Search input"
+            />
+        </div>
+
+        <div class="flex items-center space-x-4 relative">
+            <button id="notification-button" class="p-2 rounded-full hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:hover:bg-gray-700" aria-label="Notifications" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bell text-lg"></i>
+            </button>
+            <button id="chat-ai-button" class="p-2 rounded-full hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:hover:bg-gray-700" aria-label="Chat with AI Tutor" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-robot text-lg"></i> </button>
+            <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:hover:bg-gray-700" aria-label="Toggle theme">
+                <i class="fas fa-moon text-lg" id="theme-icon"></i>
+            </button>
+            <div id="profile-area" class="relative flex items-center space-x-2 cursor-pointer" aria-haspopup="true" aria-expanded="false">
+                <img src="https://placehold.co/36x36/60A5FA/FFFFFF?text=JP" alt="User Avatar" class="w-9 h-9 rounded-full object-cover border-2 border-blue-400" aria-label="User profile image">
+                <span class="font-medium hidden sm:block text-gray-800 dark:text-gray-200">Jane P.</span>
+                <div id="profile-dropdown" class="dropdown-menu hidden">
+                    <ul class="py-1" role="menu" aria-orientation="vertical">
+                        <li><a href="#profile-settings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700" role="menuitem">View Profile</a></li>
+                        <li><a href="#account-settings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700" role="menuitem">Account Settings</a></li>
+                        <li><a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700" role="menuitem">Sign Out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        <aside id="sidebar" class="sidebar-panel bg-white border-r border-gray-200 p-4 flex-shrink-0 w-64 md:w-60 custom-scrollbar overflow-y-auto dark:bg-gray-800 dark:border-gray-700">
+            <nav class="space-y-2" role="navigation">
+                <a href="#dashboard" class="sidebar-link flex items-center p-3 rounded-lg hover:bg-gray-100 font-medium text-blue-600 dark:hover:bg-gray-700 dark:text-blue-400" aria-current="page">
+                    <i class="fas fa-chart-line mr-4 text-xl"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#my-courses" class="sidebar-link flex items-center p-3 rounded-lg hover:bg-gray-100 text-gray-700 dark:hover:bg-gray-700 dark:text-gray-300">
+                    <i class="fas fa-book-open mr-4 text-xl"></i>
+                    <span>My Courses</span>
+                </a>
+                <a href="#progress" class="sidebar-link flex items-center p-3 rounded-lg hover:bg-gray-100 text-gray-700 dark:hover:bg-gray-700 dark:text-gray-300">
+                    <i class="fas fa-trophy mr-4 text-xl"></i>
+                    <span>Progress</span>
+                </a>
+                <a href="#quizzes" class="sidebar-link flex items-center p-3 rounded-lg hover:bg-gray-100 text-gray-700 dark:hover:bg-gray-700 dark:text-gray-300">
+                    <i class="fas fa-question-circle mr-4 text-xl"></i>
+                    <span>Quizzes</span>
+                </a>
+                <a href="#explore" class="sidebar-link flex items-center p-3 rounded-lg hover:bg-gray-100 text-gray-700 dark:hover:bg-gray-700 dark:text-gray-300">
+                    <i class="fas fa-compass mr-4 text-xl"></i>
+                    <span>Explore</span>
+                </a>
+            </nav>
+            <hr class="my-6 border-gray-200 dark:border-gray-700">
+            <div class="space-y-2">
+                <a href="#settings" class="sidebar-link flex items-center p-3 rounded-lg hover:bg-gray-100 text-gray-700 dark:hover:bg-gray-700 dark:text-gray-300">
+                    <i class="fas fa-cog mr-4 text-xl"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="#support" class="sidebar-link flex items-center p-3 rounded-lg hover:bg-gray-100 text-gray-700 dark:hover:bg-gray-700 dark:text-gray-300">
+                    <i class="fas fa-life-ring mr-4 text-xl"></i>
+                    <span>Support</span>
+                </a>
+            </div>
+            <div class="mt-8 p-4 bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg shadow-inner text-gray-800 sidebar-promo dark:from-gray-700 dark:to-gray-800 dark:text-gray-200">
+                <p class="text-sm font-semibold mb-2">Boost your learning!</p>
+                <p class="text-xs mb-3">Upgrade to Premium for exclusive content and AI coaching.</p>
+                <button class="w-full bg-blue-500 text-white text-sm py-2 rounded-md hover:bg-blue-600 transition-colors duration-200">Upgrade Now</button>
+            </div>
+        </aside>
+
+        <main id="main-content-area" class="flex-1 p-6 overflow-y-auto custom-scrollbar" role="main" aria-live="polite" tabindex="-1">
+            <section id="dashboard-content" class="content-section" tabindex="-1">
+                <h1 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">Welcome back, Jane!</h1>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-blue-200 ai-emphasized dark:bg-gray-800 dark:border-blue-700">
+                        <h2 class="text-xl font-semibold text-blue-600 mb-4 dark:text-blue-400">Today's AI Focus</h2>
+                        <p id="ai-focus-content" class="text-gray-700 mb-4 dark:text-gray-300">
+                            Your AI tutor suggests reviewing **Data Structures Module 3** and spending 30 minutes on **JavaScript algorithms**. You're close to mastering Lists!
+                        </p>
+                        <button id="refresh-ai-focus" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-200">
+                            <i class="fas fa-sync-alt mr-2"></i> Refresh Focus
+                        </button>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-md dark:bg-gray-800">
+                        <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Your Progress Snapshot</h2>
+                        <p class="text-gray-700 mb-4 dark:text-gray-300">
+                            You've completed 75% of your current learning path. Keep up the great work!
+                        </p>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                            <div class="bg-blue-500 h-2.5 rounded-full" style="width: 75%"></div>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2 dark:text-gray-400">Next milestone: Finish 'Advanced React Patterns'.</p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-md dark:bg-gray-800">
+                        <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Upcoming Deadlines</h2>
+                        <ul class="space-y-3 text-gray-700 dark:text-gray-300">
+                            <li class="flex justify-between items-center text-sm">
+                                <span><i class="fas fa-calendar-alt mr-2 text-blue-500"></i> Project Alpha Submission</span>
+                                <span class="font-medium text-red-500">2 days</span>
+                            </li>
+                            <li class="flex justify-between items-center text-sm">
+                                <span><i class="fas fa-calendar-alt mr-2 text-blue-500"></i> Module 5 Quiz</span>
+                                <span class="font-medium text-yellow-500">5 days</span>
+                            </li>
+                            <li class="flex justify-between items-center text-sm">
+                                <span><i class="fas fa-calendar-alt mr-2 text-blue-500"></i> Peer Review for Essay</span>
+                                <span class="font-medium">1 week</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h2 class="text-2xl font-bold mb-5 text-gray-800 dark:text-gray-100">AI Recommended for You</h2>
+                <div id="recommendations-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    </div>
+
+                <button id="refresh-ai-reco" class="mt-8 px-6 py-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition-colors duration-200 block mx-auto">
+                    <i class="fas fa-sync-alt mr-2"></i> Refresh AI Recommendations
+                </button>
+            </section>
+
+            <section id="my-courses-content" class="content-section hidden" tabindex="-1">
+                <h1 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">My Courses</h1>
+                <div id="my-courses-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    </div>
+            </section>
+
+            <section id="course-detail-content" class="content-section hidden" tabindex="-1">
+                <button id="back-to-courses" class="mb-4 px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
+                    <i class="fas fa-arrow-left mr-2"></i> Back to My Courses
+                </button>
+                <h1 id="course-detail-title" class="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-100"></h1>
+                <p id="course-detail-description" class="text-gray-700 mb-6 dark:text-gray-300"></p>
+
+                <div class="bg-white p-6 rounded-lg shadow-md mb-6 dark:bg-gray-800">
+                    <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Course Progress</h2>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 mb-2">
+                        <div id="course-detail-progress-bar" class="bg-blue-500 h-2.5 rounded-full" style="width: 0%"></div>
+                    </div>
+                    <p id="course-detail-progress-text" class="text-sm text-gray-600 dark:text-gray-400"></p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md dark:bg-gray-800">
+                    <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Course Modules</h2>
+                    <div id="course-modules-list" class="space-y-4">
+                        </div>
+                </div>
+            </section>
+
+            <section id="progress-content" class="content-section hidden" tabindex="-1">
+                <h1 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">Your Learning Progress</h1>
+                <div class="bg-white p-6 rounded-lg shadow-md dark:bg-gray-800">
+                    <p class="text-gray-700 mb-4 dark:text-gray-300">Detailed analytics about your completed lessons, mastery levels, and time spent learning.</p>
+                    <img src="https://placehold.co/600x250/C0C0C0/333333?text=Progress+Graph+Placeholder" alt="Progress Graph" class="w-full rounded-md mb-4" />
+                    <ul class="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-2">
+                        <li>**Hours Logged This Week:** 12.5 hrs</li>
+                        <li>**Courses Completed:** 3 of 5</li>
+                        <li>**Average Quiz Score:** 88%</li>
+                        <li>**Mastery Level (Python):** Advanced</li>
+                        <li>**Next Goal:** Complete "Advanced React Patterns" by end of month.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="quizzes-content" class="content-section hidden" tabindex="-1">
+                <h1 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">Quizzes & Assessments</h1>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow-md dark:bg-gray-800">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2 dark:text-gray-100">JavaScript Basics Quiz</h3>
+                        <p class="text-gray-700 text-sm mb-3 dark:text-gray-300">Attempts: 2 | Last Score: 75%</p>
+                        <button class="px-4 py-2 bg-blue-500 text-white text-sm rounded-md hover:bg-blue-600">Retake Quiz</button>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md dark:bg-gray-800">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2 dark:text-gray-100">Advanced SQL Challenge</h3>
+                        <p class="text-gray-700 text-sm mb-3 dark:text-gray-300">Attempts: 1 | Last Score: N/A</p>
+                        <button class="px-4 py-2 bg-blue-500 text-white text-sm rounded-md hover:bg-blue-600">Start Quiz</button>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md dark:bg-gray-800">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2 dark:text-gray-100">React Component Lifecycle</h3>
+                        <p class="text-gray-700 text-sm mb-3 dark:text-gray-300">Attempts: 0 | Recommended: Yes</p>
+                        <button class="px-4 py-2 bg-blue-500 text-white text-sm rounded-md hover:bg-blue-600">Take Quiz</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="explore-content" class="content-section hidden" tabindex="-1">
+                <h1 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">Explore New Content</h1>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow-md dark:bg-gray-800">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2 dark:text-gray-100">Generative AI Workshop</h3>
+                        <p class="text-gray-700 text-sm mb-3 dark:text-gray-300">Discover the latest in AI content generation and practical applications.</p>
+                        <button class="px-4 py-2 bg-blue-500 text-white text-sm rounded-md hover:bg-blue-600">Enroll</button>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md dark:bg-gray-800">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2 dark:text-gray-100">Cybersecurity Basics</h3>
+                        <p class="text-gray-700 text-sm mb-3 dark:text-gray-300">Essential knowledge for online safety and protecting your digital footprint.</p>
+                        <button class="px-4 py-2 bg-blue-500 text-white text-sm rounded-md hover:bg-blue-600">Enroll</button>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md dark:bg-gray-800">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2 dark:text-gray-100">Data Visualization with D3.js</h3>
+                        <p class="text-gray-700 text-sm mb-3 dark:text-gray-300">Learn to create stunning interactive data visualizations for the web.</p>
+                        <button class="px-4 py-2 bg-blue-500 text-white text-sm rounded-md hover:bg-blue-600">Explore</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="settings-content" class="content-section hidden" tabindex="-1">
+                <h1 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">Settings</h1>
+                <div class="bg-white p-6 rounded-lg shadow-md dark:bg-gray-800">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4 dark:text-gray-100">Account Preferences</h3>
+                    <div class="mb-4">
+                        <label for="username-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Username</label>
+                        <input type="text" id="username-input" value="Jane P." class="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:text-white dark:border-gray-600" aria-label="Username">
+                    </div>
+                    <div class="mb-4">
+                        <label for="email-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                        <input type="email" id="email-input" value="jane.p@example.com" class="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:text-white dark:border-gray-600" aria-label="Email address">
+                    </div>
+                    <div class="mb-4">
+                        <label for="password-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
+                        <input type="password" id="password-input" value="********" class="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:text-white dark:border-gray-600" aria-label="Password">
+                        <button class="mt-2 text-blue-500 text-sm hover:underline">Change Password</button>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-800 mt-8 mb-4 dark:text-gray-100">Notification Settings</h3>
+                    <div class="flex items-center justify-between mb-4">
+                        <label for="notifications-toggle" class="text-gray-700 dark:text-gray-300">Email Notifications</label>
+                        <input type="checkbox" id="notifications-toggle" class="form-checkbox h-5 w-5 text-blue-600 rounded" checked aria-label="Toggle email notifications">
+                    </div>
+                    <div class="flex items-center justify-between mb-4">
+                        <label for="in-app-notifications-toggle" class="text-gray-700 dark:text-gray-300">In-App Notifications</label>
+                        <input type="checkbox" id="in-app-notifications-toggle" class="form-checkbox h-5 w-5 text-blue-600 rounded" checked aria-label="Toggle in-app notifications">
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-800 mt-8 mb-4 dark:text-gray-100">General Settings</h3>
+                    <div class="flex items-center justify-between mb-4">
+                        <label for="language-select" class="text-gray-700 dark:text-gray-300">Language</label>
+                        <select id="language-select" class="block w-1/2 p-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:text-white dark:border-gray-600" aria-label="Select language">
+                            <option>English</option>
+                            <option>Spanish</option>
+                            <option>French</option>
+                        </select>
+                    </div>
+                    <button class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Save Changes</button>
+                </div>
+            </section>
+
+            <section id="support-content" class="content-section hidden" tabindex="-1">
+                <h1 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">Support & Help</h1>
+                <div class="bg-white p-6 rounded-lg shadow-md dark:bg-gray-800">
+                    <p class="text-gray-700 mb-4 dark:text-gray-300">If you need help, please check our comprehensive FAQ section or contact our dedicated support team directly.</p>
+                    <button class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 mr-4">View FAQ</button>
+                    <button class="px-6 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">Contact Support</button>
+                </div>
+            </section>
+
+            <section id="profile-settings-content" class="content-section hidden" tabindex="-1">
+                <h1 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">My Profile</h1>
+                <div class="bg-white p-6 rounded-lg shadow-md dark:bg-gray-800">
+                    <div class="flex flex-col items-center mb-6">
+                        <img src="https://placehold.co/100x100/60A5FA/FFFFFF?text=JP" alt="User Avatar" class="w-24 h-24 rounded-full object-cover border-4 border-blue-400 mb-4">
+                        <button class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">Change Profile Picture</button>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Full Name:</label>
+                        <p class="text-lg text-gray-800 dark:text-gray-100">Jane P. Doe</p>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Learning Path:</label>
+                        <p class="text-lg text-gray-800 dark:text-gray-100">Full Stack Web Development</p>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Member Since:</label>
+                        <p class="text-lg text-gray-800 dark:text-gray-100">January 2023</p>
+                    </div>
+                    <button class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Edit Profile</button>
+                </div>
+            </section>
+
+            <section id="account-settings-content" class="content-section hidden" tabindex="-1">
+                <h1 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">Account Settings</h1>
+                <div class="bg-white p-6 rounded-lg shadow-md dark:bg-gray-800">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4 dark:text-gray-100">Security</h3>
+                    <div class="mb-4">
+                        <label for="current-password-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Current Password</label>
+                        <input type="password" id="current-password-input" class="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:text-white dark:border-gray-600" aria-label="Current password">
+                    </div>
+                    <div class="mb-4">
+                        <label for="new-password-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">New Password</label>
+                        <input type="password" id="new-password-input" class="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:text-white dark:border-gray-600" aria-label="New password">
+                    </div>
+                    <div class="mb-4">
+                        <label for="confirm-password-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Confirm New Password</label>
+                        <input type="password" id="confirm-password-input" class="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:text-white dark:border-gray-600" aria-label="Confirm new password">
+                    </div>
+                    <button class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Update Password</button>
+
+                    <h3 class="text-xl font-semibold text-gray-800 mt-8 mb-4 dark:text-gray-100">Privacy Controls</h3>
+                    <div class="flex items-center justify-between mb-4">
+                        <label for="data-sharing-toggle" class="text-gray-700 dark:text-gray-300">Share Anonymized Data</label>
+                        <input type="checkbox" id="data-sharing-toggle" class="form-checkbox h-5 w-5 text-blue-600 rounded" aria-label="Toggle data sharing" checked>
+                    </div>
+                    <div class="flex items-center justify-between mb-4">
+                        <label for="activity-tracking-toggle" class="text-gray-700 dark:text-gray-300">Track Learning Activity</label>
+                        <input type="checkbox" id="activity-tracking-toggle" class="form-checkbox h-5 w-5 text-blue-600 rounded" aria-label="Toggle learning activity tracking" checked>
+                    </div>
+                    <button class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Save Privacy Settings</button>
+
+                    <h3 class="text-xl font-semibold text-gray-800 mt-8 mb-4 dark:text-gray-100">Danger Zone</h3>
+                    <button class="px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">Delete Account</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="ai-chat-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="chat-modal-title">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h2 id="chat-modal-title" class="text-xl font-bold text-gray-900 dark:text-white">Chat with AI Tutor <i class="fas fa-robot ml-2 text-blue-500"></i></h2>
+                <button id="close-chat-modal" class="p-2 rounded-full hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:hover:bg-gray-700" aria-label="Close chat modal">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+            <div id="chat-history" class="h-64 overflow-y-auto custom-scrollbar p-3 mb-4 border border-gray-200 rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600" tabindex="0" aria-live="polite" aria-atomic="true">
+                <div class="text-gray-700 dark:text-gray-300 mb-2">
+                    <span class="font-semibold text-blue-600 dark:text-blue-400">AI Tutor:</span> Hello Jane! How can I assist you with your learning today?
+                </div>
+            </div>
+            <div class="flex">
+                <input
+                    type="text"
+                    id="chat-input"
+                    placeholder="Ask your AI tutor a question..."
+                    class="flex-1 p-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                    aria-label="Chat input"
+                />
+                <button id="send-chat-button" class="p-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Send message">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+            <p id="chat-loading-indicator" class="text-center text-sm text-gray-600 mt-2 hidden dark:text-gray-400" aria-live="polite">AI Tutor is typing...</p>
+        </div>
+    </div>
+
+    <div id="notification-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="notification-modal-title">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h2 id="notification-modal-title" class="text-xl font-bold text-gray-900 dark:text-white">Notifications <i class="fas fa-bell ml-2 text-yellow-500"></i></h2>
+                <button id="close-notification-modal" class="p-2 rounded-full hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:hover:bg-gray-700" aria-label="Close notifications">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+            <div class="h-64 overflow-y-auto custom-scrollbar p-3 border border-gray-200 rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600" tabindex="0" aria-live="polite" aria-atomic="true">
+                <ul class="space-y-3">
+                    <li class="p-3 bg-white rounded-md shadow-sm dark:bg-gray-800" role="alert">
+                        <p class="font-semibold text-gray-800 dark:text-gray-100">New Quiz Available!</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">"Advanced JavaScript Concepts" quiz is now live.</p>
+                        <span class="text-xs text-gray-500 dark:text-gray-500">2 hours ago</span>
+                    </li>
+                    <li class="p-3 bg-white rounded-md shadow-sm dark:bg-gray-800" role="alert">
+                        <p class="font-semibold text-gray-800 dark:text-gray-100">Course Update</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">"Python for Data Science" received new practice problems.</p>
+                        <span class="text-xs text-gray-500 dark:text-gray-500">1 day ago</span>
+                    </li>
+                    <li class="p-3 bg-white rounded-md shadow-sm dark:bg-gray-800" role="alert">
+                        <p class="font-semibold text-gray-800 dark:text-gray-100">AI Focus Refreshed</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Your daily learning focus has been updated by the AI.</p>
+                        <span class="text-xs text-gray-500 dark:text-gray-500">Today</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // --- Mock Data for Recommendations (with Pexels video thumbnails) ---
+        const recommendations = [
+            {
+                id: 'course1',
+                type: 'Course',
+                title: 'Data Structures & Algorithms in Python',
+                description: 'Master fundamental data structures and algorithms using Python, crucial for technical interviews.',
+                icon: 'fas fa-code',
+                color: 'blue',
+                thumbnail: 'https://images.pexels.com/videos/7841973/programming-7841973.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500' // Pexels video thumbnail
+            },
+            {
+                id: 'article2',
+                type: 'Article',
+                title: 'The Future of AI in Education',
+                description: 'Explore how AI is transforming learning experiences globally, from personalized tutors to content generation.',
+                icon: 'fas fa-newspaper',
+                color: 'purple',
+                thumbnail: 'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' // Pexels image
+            },
+            {
+                id: 'video3',
+                type: 'Video',
+                title: 'Understanding Neural Networks Visually',
+                description: 'An animated guide to the core concepts of deep learning, explaining complex ideas simply.',
+                icon: 'fas fa-video',
+                color: 'red',
+                thumbnail: 'https://images.pexels.com/videos/8540702/pexels-video-8540702.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500' // Pexels video thumbnail
+            },
+            {
+                id: 'quiz4',
+                type: 'Quiz',
+                title: 'Quiz: Fundamental Algorithms',
+                description: 'Test your knowledge on sorting, searching, and graph algorithms with this interactive quiz.',
+                icon: 'fas fa-brain',
+                color: 'green',
+                thumbnail: 'https://images.pexels.com/photos/5905709/pexels-photo-5905709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' // Pexels image
+            },
+            {
+                id: 'book5',
+                type: 'Book',
+                title: 'Clean Code: A Handbook of Agile Software Craftsmanship',
+                description: 'Learn to write clean, maintainable, and efficient code that stands the test of time.',
+                icon: 'fas fa-book',
+                color: 'yellow',
+                thumbnail: 'https://images.pexels.com/photos/106368/pexels-photo-106368.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' // Pexels image
+            },
+            {
+                id: 'podcast6',
+                type: 'Podcast',
+                title: 'AI in 5 Minutes: Ethical AI',
+                description: 'Quick takes on the moral implications and societal impact of artificial intelligence.',
+                icon: 'fas fa-microphone-alt',
+                color: 'indigo',
+                thumbnail: 'https://images.pexels.com/photos/5926390/pexels-photo-5926390.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' // Pexels image
+            },
+            {
+                id: 'course7',
+                type: 'Course',
+                title: 'Introduction to Quantum Computing',
+                description: 'An accessible introduction to the mind-bending world of quantum mechanics and computing.',
+                icon: 'fas fa-atom',
+                color: 'teal',
+                thumbnail: 'https://images.pexels.com/photos/8386438/pexels-photo-8386438.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+            },
+            {
+                id: 'video8',
+                type: 'Video',
+                title: 'Deep Dive into React Hooks',
+                description: 'Master custom hooks, context API, and advanced state management in React.',
+                icon: 'fab fa-react',
+                color: 'cyan',
+                thumbnail: 'https://images.pexels.com/videos/8540608/pexels-video-8540608.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
+            }
+        ];
+
+        // --- New Mock Data for Courses ---
+        const courses = [
+            {
+                id: 'web-dev-bootcamp',
+                title: 'Web Development Bootcamp',
+                description: 'A comprehensive bootcamp covering HTML, CSS, JavaScript, React, Node.js, and databases. Build modern web applications from scratch.',
+                progress: 60,
+                thumbnail: 'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', // Placeholder for course image
+                modules: [
+                    { id: 'html-css', title: 'Module 1: HTML & CSS Essentials', completed: true, videoUrl: 'https://www.pexels.com/videos/man-typing-on-a-laptop-4537130/download/?search_query=coding&tracking_id=4537130&auto_play=1' },
+                    { id: 'js-basics', title: 'Module 2: JavaScript Fundamentals', completed: true, videoUrl: 'https://www.pexels.com/videos/person-typing-on-a-laptop-4537130/download/?search_query=coding&tracking_id=4537130&auto_play=1' },
+                    { id: 'react-intro', title: 'Module 3: Introduction to React', completed: false, videoUrl: 'https://www.pexels.com/videos/code-on-a-computer-screen-4537130/download/?search_query=coding&tracking_id=4537130&auto_play=1' },
+                    { id: 'node-express', title: 'Module 4: Node.js & Express', completed: false, videoUrl: 'https://www.pexels.com/videos/coding-on-a-computer-screen-4537130/download/?search_query=coding&tracking_id=4537130&auto_play=1' },
+                    { id: 'databases', title: 'Module 5: Databases with MongoDB', completed: false, videoUrl: 'https://www.pexels.com/videos/typing-on-a-keyboard-4537130/download/?search_query=coding&tracking_id=4537130&auto_play=1' }
+                ]
+            },
+            {
+                id: 'data-science-python',
+                title: 'Data Science with Python',
+                description: 'Learn data manipulation, analysis, visualization, and machine learning using Python libraries like Pandas, NumPy, and Scikit-learn.',
+                progress: 85,
+                thumbnail: 'https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+                modules: [
+                    { id: 'python-for-ds', title: 'Module 1: Python for Data Science', completed: true, videoUrl: 'https://www.pexels.com/videos/a-person-typing-on-a-keyboard-4537130/download/?search_query=coding&tracking_id=4537130&auto_play=1' },
+                    { id: 'pandas-numpy', title: 'Module 2: Pandas & NumPy', completed: true, videoUrl: 'https://www.pexels.com/videos/coding-on-a-computer-screen-4537130/download/?search_query=coding&tracking_id=4537130&auto_play=1' },
+                    { id: 'data-viz', title: 'Module 3: Data Visualization', completed: true, videoUrl: 'https://www.pexels.com/videos/man-typing-on-a-laptop-4537130/download/?search_query=coding&tracking_id=4537130&auto_play=1' },
+                    { id: 'ml-basics', title: 'Module 4: Machine Learning Basics', completed: false, videoUrl: 'https://www.pexels.com/videos/person-typing-on-a-laptop-4537130/download/?search_query=coding&tracking_id=4537130&auto_play=1' }
+                ]
+            },
+            {
+                id: 'ml-fundamentals',
+                title: 'Machine Learning Fundamentals',
+                description: 'An introduction to the core concepts of machine learning, including supervised and unsupervised learning algorithms.',
+                progress: 40,
+                thumbnail: 'https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+                modules: [
+                    { id: 'intro-ml', title: 'Module 1: What is ML?', completed: true, videoUrl: 'https://www.pexels.com/videos/code-on-a-computer-screen-4537130/download/?search_query=coding&tracking_id=4537130&auto_play=1' },
+                    { id: 'linear-regression', title: 'Module 2: Linear Regression', completed: false, videoUrl: 'https://www.pexels.com/videos/coding-on-a-computer-screen-4537130/download/?search_query=coding&tracking_id=4537130&auto_play=1' },
+                    { id: 'logistic-regression', title: 'Module 3: Logistic Regression', completed: false, videoUrl: 'https://www.pexels.com/videos/typing-on-a-keyboard-4537130/download/?search_query=coding&tracking_id=4537130&auto_play=1' }
+                ]
+            },
+            {
+                id: 'cloud-computing',
+                title: 'Cloud Computing Essentials',
+                description: 'Understand the basics of cloud computing, different service models (IaaS, PaaS, SaaS), and major cloud providers.',
+                progress: 20,
+                thumbnail: 'https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+                modules: [
+                    { id: 'what-is-cloud', title: 'Module 1: Introduction to Cloud', completed: true, videoUrl: 'https://www.pexels.com/videos/abstract-light-movement-8540702/download/?search_query=cloud&tracking_id=8540702&auto_play=1' },
+                    { id: 'iaas-paas-saas', title: 'Module 2: Service Models', completed: false, videoUrl: 'https://www.pexels.com/videos/abstract-light-movement-8540702/download/?search_query=cloud&tracking_id=8540702&auto_play=1' }
+                ]
+            },
+            {
+                id: 'cybersecurity-basics',
+                title: 'Cybersecurity Basics',
+                description: 'Learn fundamental cybersecurity concepts, common threats, and best practices to protect yourself and your data online.',
+                progress: 75,
+                thumbnail: 'https://images.pexels.com/photos/3220594/pexels-photo-3220594.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+                modules: [
+                    { id: 'intro-cyber', title: 'Module 1: Cyber Threats Overview', completed: true, videoUrl: 'https://www.pexels.com/videos/a-person-typing-on-a-keyboard-4537130/download/?search_query=cybersecurity&tracking_id=4537130&auto_play=1' },
+                    { id: 'password-security', title: 'Module 2: Password Management', completed: true, videoUrl: 'https://www.pexels.com/videos/coding-on-a-computer-screen-4537130/download/?search_query=cybersecurity&tracking_id=4537130&auto_play=1' },
+                    { id: 'network-security', title: 'Module 3: Network Security', completed: false, videoUrl: 'https://www.pexels.com/videos/man-typing-on-a-laptop-4537130/download/?search_query=cybersecurity&tracking_id=4537130&auto_play=1' }
+                ]
+            },
+            {
+                id: 'generative-ai',
+                title: 'Generative AI Fundamentals',
+                description: 'Explore the exciting world of generative AI, including models like GANs and Transformers, and their applications.',
+                progress: 10,
+                thumbnail: 'https://images.pexels.com/photos/7413914/pexels-photo-7413914.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+                modules: [
+                    { id: 'intro-gen-ai', title: 'Module 1: What is Generative AI?', completed: true, videoUrl: 'https://www.pexels.com/videos/abstract-light-movement-8540702/download/?search_query=ai&tracking_id=8540702&auto_play=1' },
+                    { id: 'gans-basics', title: 'Module 2: Generative Adversarial Networks (GANs)', completed: false, videoUrl: 'https://www.pexels.com/videos/abstract-light-movement-8540702/download/?search_query=ai&tracking_id=8540702&auto_play=1' }
+                ]
+            },
+            {
+                id: 'mobile-dev-flutter',
+                title: 'Mobile Development with Flutter',
+                description: 'Build beautiful, natively compiled applications for mobile, web, and desktop from a single codebase using Flutter and Dart.',
+                progress: 0,
+                thumbnail: 'https://images.pexels.com/photos/57690/pexels-photo-57690.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+                modules: [
+                    { id: 'flutter-intro', title: 'Module 1: Introduction to Flutter', completed: false, videoUrl: 'https://www.pexels.com/videos/a-person-typing-on-a-keyboard-4537130/download/?search_query=mobile+development&tracking_id=4537130&auto_play=1' },
+                    { id: 'widgets-layouts', title: 'Module 2: Widgets and Layouts', completed: false, videoUrl: 'https://www.pexels.com/videos/coding-on-a-computer-screen-4537130/download/?search_query=mobile+development&tracking_id=4537130&auto_play=1' }
+                ]
+            },
+            {
+                id: 'ux-ui-design',
+                title: 'UX/UI Design Principles',
+                description: 'Learn the fundamentals of user experience (UX) and user interface (UI) design to create intuitive and engaging digital products.',
+                progress: 30,
+                thumbnail: 'https://images.pexels.com/photos/3862370/pexels-photo-3862370.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+                modules: [
+                    { id: 'intro-ux-ui', title: 'Module 1: Understanding UX/UI', completed: true, videoUrl: 'https://www.pexels.com/videos/man-typing-on-a-laptop-4537130/download/?search_query=design&tracking_id=4537130&auto_play=1' },
+                    { id: 'user-research', title: 'Module 2: User Research Methods', completed: false, videoUrl: 'https://www.pexels.com/videos/person-typing-on-a-laptop-4537130/download/?search_query=design&tracking_id=4537130&auto_play=1' }
+                ]
+            }
+        ];
+
+        // Mock data for AI Focus messages
+        const aiFocusMessages = [
+            `Your AI tutor suggests reviewing **Data Structures Module 3** and spending 30 minutes on **JavaScript algorithms**. You're close to mastering Lists!`,
+            `Based on your recent activity, focus on **Cloud Computing Fundamentals** for the next 45 minutes. Pay attention to serverless architectures.`,
+            `It seems you're struggling with **Advanced Calculus concepts**. Your AI tutor recommends re-watching Lecture 7 and trying Practice Set B.`,
+            `Great progress on **Machine Learning!** Today, the AI suggests exploring **Reinforcement Learning basics** for 25 minutes.`,
+            `Your upcoming deadline for **Project Alpha** is critical. The AI recommends dedicating the next 2 hours to completing the remaining tasks.`,
+            `Time for a quick review! Your AI tutor suggests a 15-minute quiz on **CSS Flexbox and Grid** to solidify your frontend skills.`
+        ];
+
+        // --- Utility to create a recommendation card ---
+        function createRecommendationCard(item) {
+            const card = document.createElement('div');
+            card.className = `bg-white p-5 rounded-lg shadow-md border-t-4 border-${item.color}-500 dark:bg-gray-800 dark:border-t-4 dark:border-${item.color}-700`;
+            card.innerHTML = `
+                <img src="${item.thumbnail}" alt="${item.title}" class="w-full h-40 object-cover rounded-md mb-3">
+                <div class="flex items-center mb-3">
+                    <i class="${item.icon} text-2xl text-${item.color}-500 mr-3"></i>
+                    <span class="text-sm font-semibold uppercase text-gray-600 dark:text-gray-400">${item.type}</span>
+                </div>
+                <h3 class="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-100">${item.title}</h3>
+                <p class="text-gray-700 text-sm line-clamp-3 dark:text-gray-300">${item.description}</p>
+                <button class="mt-4 px-4 py-2 bg-blue-500 text-white text-sm rounded-md hover:bg-blue-600 transition-colors duration-200">
+                    Learn More
+                </button>
+            `;
+            return card;
+        }
+
+        // --- Render Recommendations ---
+        function renderRecommendations() {
+            const grid = document.getElementById('recommendations-grid');
+            grid.innerHTML = ''; // Clear previous content
+            // Simulate AI picking a subset or reordering
+            const shuffledRecommendations = recommendations.sort(() => 0.5 - Math.random()).slice(0, 4); // Get 4 random items
+            shuffledRecommendations.forEach(item => {
+                grid.appendChild(createRecommendationCard(item));
+            });
+        }
+
+        // --- Update AI Focus Content ---
+        function updateAIFocus() {
+            const aiFocusContent = document.getElementById('ai-focus-content');
+            const randomIndex = Math.floor(Math.random() * aiFocusMessages.length);
+            aiFocusContent.innerHTML = aiFocusMessages[randomIndex];
+        }
+
+        // --- Sidebar Toggle Logic ---
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed'); // Toggle the 'collapsed' class
+            const isCollapsed = sidebar.classList.contains('collapsed');
+            menuToggle.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+        });
+
+        // --- Theme Toggle Logic ---
+        const themeToggleButton = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const body = document.body;
+
+        function applyTheme(isDark) {
+            if (isDark) {
+                body.classList.add('dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+                themeToggleButton.setAttribute('aria-label', 'Toggle light theme');
+            } else {
+                body.classList.remove('dark');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+                themeToggleButton.setAttribute('aria-label', 'Toggle dark theme');
+            }
+        }
+
+        // --- AI Chat Modal Logic ---
+        const chatAiButton = document.getElementById('chat-ai-button');
+        const aiChatModal = document.getElementById('ai-chat-modal');
+        const closeChatModalButton = document.getElementById('close-chat-modal');
+        const chatInput = document.getElementById('chat-input');
+        const sendChatButton = document.getElementById('send-chat-button');
+        const chatHistory = document.getElementById('chat-history');
+        const chatLoadingIndicator = document.getElementById('chat-loading-indicator');
+
+        chatAiButton.addEventListener('click', () => {
+            aiChatModal.classList.remove('hidden');
+            chatAiButton.setAttribute('aria-expanded', 'true');
+            // Set focus to the modal for accessibility
+            aiChatModal.focus();
+            chatInput.focus(); // Focus input field for immediate typing
+        });
+
+        closeChatModalButton.addEventListener('click', () => {
+            aiChatModal.classList.add('hidden');
+            chatAiButton.setAttribute('aria-expanded', 'false');
+            // Return focus to the trigger button
+            chatAiButton.focus();
+        });
+
+        sendChatButton.addEventListener('click', () => {
+            const userMessage = chatInput.value.trim();
+            if (userMessage === '') return;
+
+            // Add user message to chat history
+            const userMessageDiv = document.createElement('div');
+            userMessageDiv.className = 'text-right text-gray-800 dark:text-gray-200 mb-2';
+            userMessageDiv.innerHTML = `<span class="font-semibold text-green-600 dark:text-green-400">You:</span> ${userMessage}`;
+            chatHistory.appendChild(userMessageDiv);
+            chatInput.value = ''; // Clear input
+
+            chatLoadingIndicator.classList.remove('hidden'); // Show typing indicator
+            chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to bottom
+
+            // Simulate AI response after a delay
+            setTimeout(() => {
+                chatLoadingIndicator.classList.add('hidden'); // Hide typing indicator
+                const aiResponseDiv = document.createElement('div');
+                aiResponseDiv.className = 'text-gray-700 dark:text-gray-300 mb-2';
+                let aiResponseText = '';
+
+                // Simple mock responses based on keywords
+                if (userMessage.toLowerCase().includes('hello') || userMessage.toLowerCase().includes('hi')) {
+                    aiResponseText = 'Hello! How can I assist you with your learning today?';
+                } else if (userMessage.toLowerCase().includes('progress')) {
+                    aiResponseText = 'You are making excellent progress! Keep reviewing the advanced topics.';
+                } else if (userMessage.toLowerCase().includes('recommend')) {
+                    aiResponseText = 'I recommend focusing on "Advanced React Patterns" next. It aligns with your current learning path.';
+                } else if (userMessage.toLowerCase().includes('deadline')) {
+                    aiResponseText = 'Remember, Project Alpha is due in 2 days. Make sure to allocate enough time!';
+                } else {
+                    aiResponseText = 'That\'s an interesting question! I\'m still learning, but I can help you with your learning path and resources.';
+                }
+
+                aiResponseDiv.innerHTML = `<span class="font-semibold text-blue-600 dark:text-blue-400">AI Tutor:</span> ${aiResponseText}`;
+                chatHistory.appendChild(aiResponseDiv);
+                chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to bottom again
+            }, 1500); // Simulate 1.5 seconds of AI thinking
+        });
+
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendChatButton.click();
+            }
+        });
+
+        // --- Notification Modal Logic ---
+        const notificationButton = document.getElementById('notification-button');
+        const notificationModal = document.getElementById('notification-modal');
+        const closeNotificationModalButton = document.getElementById('close-notification-modal');
+
+        notificationButton.addEventListener('click', () => {
+            notificationModal.classList.remove('hidden');
+            notificationButton.setAttribute('aria-expanded', 'true');
+            notificationModal.focus();
+        });
+
+        closeNotificationModalButton.addEventListener('click', () => {
+            notificationModal.classList.add('hidden');
+            notificationButton.setAttribute('aria-expanded', 'false');
+            notificationButton.focus();
+        });
+
+        // --- Profile Dropdown Logic ---
+        const profileArea = document.getElementById('profile-area');
+        const profileDropdown = document.getElementById('profile-dropdown');
+
+        profileArea.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevent document click from closing it immediately
+            const isExpanded = profileDropdown.classList.toggle('hidden');
+            profileArea.setAttribute('aria-expanded', !isExpanded);
+            if (!isExpanded) {
+                // Focus the first actionable item in the dropdown
+                profileDropdown.querySelector('ul a').focus();
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!profileArea.contains(event.target) && !profileDropdown.classList.contains('hidden')) {
+                profileDropdown.classList.add('hidden');
+                profileArea.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // --- Section Switching Logic ---
+        const sidebarLinks = document.querySelectorAll('.sidebar-link');
+        const contentSections = document.querySelectorAll('.content-section');
+        const mainContentArea = document.getElementById('main-content-area');
+
+        function showSection(sectionId) {
+            contentSections.forEach(section => {
+                section.classList.add('hidden');
+            });
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.remove('hidden');
+                // Announce section change for screen readers
+                mainContentArea.setAttribute('aria-label', `${targetSection.querySelector('h1').textContent} section`);
+                targetSection.focus(); // Focus the new section for screen readers
+            }
+
+
+            // Update active link styling
+            sidebarLinks.forEach(link => {
+                link.classList.remove('font-medium', 'text-blue-600', 'dark:text-blue-400');
+                link.classList.add('text-gray-700', 'dark:text-gray-300');
+                link.removeAttribute('aria-current');
+            });
+            const activeLink = document.querySelector(`.sidebar-link[href="#${sectionId.replace('-content', '')}"]`);
+            if (activeLink) {
+                activeLink.classList.add('font-medium', 'text-blue-600', 'dark:text-blue-400');
+                activeLink.classList.remove('text-gray-700', 'dark:text-gray-300');
+                activeLink.setAttribute('aria-current', 'page');
+            }
+        }
+
+        // --- Search Bar Logic ---
+        const searchInput = document.getElementById('search-input');
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                alert(`Simulating search for: "${searchInput.value}"`);
+                searchInput.blur(); // Remove focus from input
+            }
+        });
+
+        // --- My Courses Section Specific Logic ---
+        const myCoursesGrid = document.getElementById('my-courses-grid');
+        const courseDetailSection = document.getElementById('course-detail-content');
+        const backToCoursesButton = document.getElementById('back-to-courses');
+
+        function renderMyCourses() {
+            myCoursesGrid.innerHTML = ''; // Clear existing courses
+            courses.forEach(course => {
+                const courseCard = document.createElement('div');
+                courseCard.className = 'bg-white p-6 rounded-lg shadow-md dark:bg-gray-800 cursor-pointer course-card';
+                courseCard.setAttribute('data-course-id', course.id);
+                courseCard.setAttribute('tabindex', '0'); // Make clickable via keyboard
+                courseCard.setAttribute('role', 'link'); // Indicate it's a link
+                courseCard.setAttribute('aria-label', `View course: ${course.title}`);
+
+                courseCard.innerHTML = `
+                    <img src="${course.thumbnail}" alt="Thumbnail for ${course.title}" class="w-full h-32 object-cover rounded-md mb-3">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2 dark:text-gray-100">${course.title}</h3>
+                    <p class="text-gray-700 text-sm mb-3 line-clamp-2 dark:text-gray-300">${course.description}</p>
+                    <p class="text-gray-700 text-sm mb-3 dark:text-gray-300">Progress: ${course.progress}%</p>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 mb-4" role="progressbar" aria-valuenow="${course.progress}" aria-valuemin="0" aria-valuemax="100">
+                        <div class="bg-green-500 h-2.5 rounded-full" style="width: ${course.progress}%"></div>
+                    </div>
+                    <button class="px-4 py-2 bg-blue-500 text-white text-sm rounded-md hover:bg-blue-600">Continue Learning</button>
+                `;
+                myCoursesGrid.appendChild(courseCard);
+
+                courseCard.addEventListener('click', () => {
+                    showCourseDetail(course.id);
+                });
+                courseCard.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        showCourseDetail(course.id);
+                    }
+                });
+            });
+        }
+
+        function showCourseDetail(courseId) {
+            const course = courses.find(c => c.id === courseId);
+            if (!course) return;
+
+            document.getElementById('course-detail-title').textContent = course.title;
+            document.getElementById('course-detail-description').textContent = course.description;
+            document.getElementById('course-detail-progress-bar').style.width = `${course.progress}%`;
+            document.getElementById('course-detail-progress-text').textContent = `Overall Progress: ${course.progress}%`;
+
+            const modulesList = document.getElementById('course-modules-list');
+            modulesList.innerHTML = ''; // Clear existing modules
+
+            course.modules.forEach(module => {
+                const moduleDiv = document.createElement('div');
+                moduleDiv.className = 'bg-gray-50 p-4 rounded-lg shadow-sm dark:bg-gray-700 flex items-center justify-between';
+                moduleDiv.innerHTML = `
+                    <div>
+                        <h3 class="font-semibold text-gray-800 dark:text-gray-100">${module.title}</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Status: ${module.completed ? 'Completed' : 'Pending'}</p>
+                    </div>
+                    <a href="${module.videoUrl}" target="_blank" rel="noopener noreferrer" class="px-3 py-1 bg-blue-500 text-white text-sm rounded-md hover:bg-blue-600 flex items-center" aria-label="Watch video for ${module.title}">
+                        <i class="fas fa-play-circle mr-2"></i> Watch Video
+                    </a>
+                `;
+                modulesList.appendChild(moduleDiv);
+            });
+
+            showSection('course-detail-content');
+            // Focus the back button for easy navigation
+            backToCoursesButton.focus();
+        }
+
+        backToCoursesButton.addEventListener('click', () => {
+            showSection('my-courses-content');
+            // Focus the first course card or the section heading
+            document.getElementById('my-courses-content').focus();
+        });
+
+
+        // --- Initial Setup on DOMContentLoaded ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderRecommendations(); // Initial render of AI recommendations
+            updateAIFocus(); // Initial update of AI Focus content
+            renderMyCourses(); // Render courses for My Courses section
+
+            // Event listener for refreshing AI Focus
+            document.getElementById('refresh-ai-focus').addEventListener('click', updateAIFocus);
+
+            // Event listener for refreshing AI Recommendations
+            document.getElementById('refresh-ai-reco').addEventListener('click', renderRecommendations);
+
+            // Theme setup (User-controlled only)
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                applyTheme(savedTheme === 'dark');
+            } else {
+                // Default to light if no preference is saved
+                applyTheme(false); // Explicitly set to light
+            }
+
+            // No window.matchMedia listener for automatic system theme changes
+            // as per user request for manual control only.
+
+            themeToggleButton.addEventListener('click', () => {
+                const currentTheme = localStorage.getItem('theme');
+                applyTheme(currentTheme === 'light'); // Toggle to the opposite theme
+            });
+
+            // Set initial visible section based on URL hash or default to dashboard
+            const initialHash = window.location.hash.substring(1);
+            if (initialHash) {
+                if (initialHash.startsWith('course-')) { // Handle deep linking to course details
+                    showCourseDetail(initialHash);
+                } else {
+                    showSection(initialHash + '-content');
+                }
+            } else {
+                showSection('dashboard-content');
+            }
+
+            // Add click listeners for sidebar links to handle section switching
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault(); // Prevent default anchor jump
+                    const sectionId = link.getAttribute('href').substring(1) + '-content'; // Get section ID from href
+                    showSection(sectionId);
+                });
+            });
+
+            // Handle dropdown links to switch sections
+            document.querySelectorAll('#profile-dropdown ul a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const sectionId = link.getAttribute('href').substring(1);
+                    if (sectionId) { // Check if it's a section link
+                        showSection(sectionId + '-content');
+                    }
+                    profileDropdown.classList.add('hidden'); // Close dropdown after click
+                    profileArea.setAttribute('aria-expanded', 'false');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Clone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #202124;
+            /* Dark mode background */
+            color: #bdc1c6;
+            /* Light gray text */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .search-input-container {
+            position: relative;
+            width: 100%;
+            max-width: 584px;
+            /* Standard Google search bar width */
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+            /* Subtle initial shadow for accuracy */
+            transition: box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            /* Smooth transition */
+        }
+
+        .search-input-container:hover {
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.2);
+            /* Stronger shadow on hover */
+        }
+
+        .search-input-container:focus-within {
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.2);
+            /* Stronger shadow on focus */
+        }
+
+        .search-input {
+            padding-left: 56px;
+            /* Increased space for search icon to prevent overlap */
+            padding-right: 56px;
+            /* Increased space for microphone icon, keeping symmetry */
+            background-color: #303134;
+            /* Darker background for input */
+            border: none;
+            /* Removed border for visual accuracy */
+            color: #e8eaed;
+            /* Light text color for input */
+        }
+
+        .search-icon,
+        .mic-icon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9aa0a6;
+            /* Icon color */
+        }
+
+        .search-icon {
+            left: 20px;
+            /* Adjusted position to align with new padding */
+        }
+
+        .mic-icon {
+            right: 20px;
+            /* Adjusted position to align with new padding */
+        }
+
+        /* Custom styling for the app launcher icon (dots) */
+        .app-launcher-icon {
+            display: flex;
+            flex-wrap: wrap;
+            width: 24px;
+            /* Adjust size as needed */
+            height: 24px;
+            align-content: center;
+            justify-content: center;
+        }
+
+        .app-launcher-icon div {
+            width: 4px;
+            height: 4px;
+            background-color: #bdc1c6;
+            border-radius: 50%;
+            margin: 2px;
+        }
+    </style>
+</head>
+
+<body class="flex flex-col min-h-screen">
+
+    <header class="flex justify-between items-center p-4 text-sm">
+        <div class="flex space-x-4">
+            <a href="#" class="hover:underline">About</a>
+            <a href="#" class="hover:underline">Store</a>
+        </div>
+        <div class="flex items-center space-x-4">
+            <a href="#" class="hover:underline">Gmail</a>
+            <a href="#" class="hover:underline">Images</a>
+            <a href="#" class="w-8 h-8">
+                <svg class="gb_F fill-white" focusable="false" viewBox="0 0 24 24">
+                    <path
+                        d="M6,8c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM12,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM6,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM6,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM12,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM16,6c0,1.1 0.9,2 2,2s2,-0.9 2,-2 -0.9,-2 -2,-2 -2,0.9 -2,2zM12,8c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM18,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM18,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2z">
+                    </path>
+                    <!-- <image src="https://ssl.gstatic.com/gb/images/bar/al-icon.png" alt="" height="24" width="24"
+                    style="border:none;display:none \9"></image> -->
+                </svg>
+            </a>
+            <div
+                class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold cursor-pointer">
+                A
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow flex flex-col items-center justify-center p-4">
+        <div class="mb-8">
+            <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_light_color_272x92dp.png"
+                alt="Google" class="w-auto h-24 max-w-full"
+                onerror="this.onerror=null;this.src='https://placehold.co/272x92/202124/bdc1c6?text=Google';">
+        </div>
+
+        <div
+            class="search-input-container mb-6 flex items-center rounded-full shadow-md hover:shadow-lg focus-within:shadow-lg transition-shadow duration-200">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-input w-full py-3 px-12 rounded-full outline-none text-lg"
+                placeholder="Search Google or type a URL">
+            <i class="fas fa-microphone mic-icon"></i>
+        </div>
+
+        <div class="flex space-x-4 mb-8">
+            <button
+                class="bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-md text-sm cursor-pointer transition-colors duration-200">Google
+                Search</button>
+            <button
+                class="bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-md text-sm cursor-pointer transition-colors duration-200">I'm
+                Feeling Lucky</button>
+        </div>
+
+        <div class="text-sm text-center mb-4">
+            <span class="text-green-400">&#10003;</span> Today's Googly: <a href="#"
+                class="text-blue-400 hover:underline">What is a diamond duck?</a>
+        </div>
+
+        <div class="text-sm text-center">
+            Google offered in:
+            <a href="#" class="text-blue-400 hover:underline mx-1">हिन्दी</a>
+            <a href="#" class="text-blue-400 hover:underline mx-1">বাংলা</a>
+            <a href="#" class="text-blue-400 hover:underline mx-1">తెలుగు</a>
+            <a href="#" class="text-blue-400 hover:underline mx-1">মराठी</a>
+            <a href="#" class="text-blue-400 hover:underline mx-1">தமிழ்</a>
+            <a href="#" class="text-blue-400 hover:underline mx-1">ગુજરાતી</a>
+            <a href="#" class="text-blue-400 hover:underline mx-1">ಕನ್ನಡ</a>
+            <a href="#" class="text-blue-400 hover:underline mx-1">മലയാളം</a>
+            <a href="#" class="text-blue-400 hover:underline mx-1">ਪੰਜਾਬੀ</a>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 py-4 px-6 text-sm flex justify-between items-center mt-auto">
+        <div class="text-gray-400">
+            India
+        </div>
+        <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:underline">Advertising</a>
+            <a href="#" class="text-gray-400 hover:underline">Business</a>
+            <a href="#" class="text-gray-400 hover:underline">How Search works</a>
+            <a href="#" class="text-gray-400 hover:underline">Privacy</a>
+            <a href="#" class="text-gray-400 hover:underline">Terms</a>
+            <a href="#" class="text-gray-400 hover:underline">Settings</a>
+        </div>
+    </footer>
+
+</body>
+
+</html>

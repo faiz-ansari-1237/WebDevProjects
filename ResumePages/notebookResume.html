@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faiz Muzaffar Ansari - Portfolio</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // Enable dark mode based on 'class'
+            theme: {
+                extend: {
+                    fontFamily: {
+                        handwritten: ['"Indie Flower"', 'cursive'],
+                    },
+                    colors: {
+                        notebookLight: {
+                            bg: '#fefefe',
+                            lines: '#e0e0e0',
+                            text: '#333333',
+                        },
+                        notebookDark: {
+                            bg: '#2d2d2d',
+                            lines: '#4a4a4a',
+                            text: '#e0e0e0',
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+
+    <style>
+        /* Global styles for the notebook theme */
+        body {
+            margin: 0;
+            font-family: 'Indie Flower', cursive; /* Default handwritten font */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth theme transition */
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+
+        /* Ensure the root element fills the viewport */
+        #root {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Base colors for light and dark themes (defined as CSS variables for JS/Canvas access) */
+        :root {
+            --color-notebookLight-bg: #fefefe;
+            --color-notebookLight-lines: #e0e0e0;
+            --color-notebookLight-text: #333333;
+
+            --color-notebookDark-bg: #2d2d2d;
+            --color-notebookDark-lines: #4a4a4a;
+            --color-notebookDark-text: #e0e0e0;
+        }
+
+        /* Apply background color to html/body based on theme class (set by ThemeContext) */
+        html.light {
+            background-color: theme('colors.notebookLight.bg');
+            color: theme('colors.notebookLight.text');
+        }
+
+        html.dark {
+            background-color: theme('colors.notebookDark.bg');
+            color: theme('colors.notebookDark.text');
+        }
+
+        /* Canvas specific styles */
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* Ensure canvas is behind content */
+        }
+    </style>
+</head>
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        // Data extracted from Faiz Muzaffar Ansari - Resume.pdf
+        const resumeData = {
+            name: "Faiz Muzaffar Ansari",
+            phone: <a href="tel:+918767191255">8767191255</a>,
+            email: <a href="mailto:ansarifaiz812@gmail.com">ansarifaiz812@gmail.com</a>,
+            summary: "Highly motivated and enthusiastic Engineering student with practical experience in web development and embedded systems. Eager to apply learned skills and contribute to innovative projects, demonstrating a strong foundation in both software and hardware.",
+            education: [
+                {
+                    qualification: "S.S.C",
+                    university: "Archana Trust English Medium School & Jr. College, Shahapur",
+                    year: "2020",
+                    marks: "79.80%"
+                },
+                {
+                    qualification: "H.S.C",
+                    university: "Archana Trust English Medium School & Jr. College, Shahapur",
+                    year: "2022",
+                    marks: "80.67%"
+                },
+                {
+                    qualification: "BE in Electronics and Telecomm Engineering",
+                    university: "Shivajirao S. Jondhale College of Engineering & Technology",
+                    year: "Aug 2024",
+                    semesters: {
+                        "Sem 1": "6.33",
+                        "Sem 2": "6.40",
+                        "Sem 3": "6.25",
+                        "Sem 4": "7.50"
+                    }
+                }
+            ],
+            experience: [
+                {
+                    title: "Intern",
+                    company: "Modern Furniture Works India LLP",
+                    duration: "02/06/2024 - 02/07/2024 (1 Month Internship)",
+                    description: [
+                        "Gained insights into the production processes of metallic beds.",
+                        "Understood various stages from raw material to finished product.",
+                        "Learned about quality control and assembly techniques.",
+                        "Observed and understood the sales department's operations and customer engagement strategies."
+                    ]
+                },
+                {
+                    title: "Intern",
+                    company: "Accunity Services LLP, Kalyan",
+                    duration: "03/10/2023 - 04/11/2023 (1 Month Internship)",
+                    description: [
+                        "Developed and meticulously maintained user interfaces utilizing HTML, CSS, and JavaScript.",
+                        "Collaborated effectively with the development team to implement new features and optimize existing functionalities, enhancing user experience."
+                    ]
+                },
+                {
+                    title: "Intern",
+                    company: "Mumbai Maha Metro, Malad",
+                    duration: "27/12/2023 - 04/01/2024 (1 Week Internship)",
+                    description: [
+                        "Assisted in daily operations and maintenance tasks, gaining valuable hands-on experience.",
+                        "Acquired practical knowledge of metro rail infrastructure and critical safety protocols."
+                    ]
+                }
+            ],
+            technicalSkills: {
+                "Web Development": ["HTML", "CSS", "JavaScript", "Bootstrap", "Full Stack Web Development (Certified)"],
+                "Embedded Systems": ["Arduino", "ESP32", "ESP8266", "ARM", "PIC", "STM32", "Raspberry Pi", "Embedded Development (Certified)"],
+                "Programming Languages": ["Python", "C", "JavaScript"],
+                "Software & Tools": ["MPLABX", "Keil", "STM32CubeIDE", "Arduino Software"],
+                "Other Skills": ["AI Enthusiast", "Linux OS"]
+            },
+            projects: [
+                {
+                    title: "Fire Alert System using Arduino",
+                    description: [
+                        "Designed and implemented a system utilizing Arduino, IR sensor, and GSM module for real-time fire detection (temperature and smoke).",
+                        "Automated SMS alerts to a predefined number, ensuring rapid response and enhanced fire safety."
+                    ]
+                },
+                {
+                    title: "Netflix Clone Webpage",
+                    description: [
+                        "Developed a responsive and visually appealing Netflix clone using front-end technologies like Bootstrap.",
+                        "Features a modern layout with dynamic movie thumbnails, an intuitive navigation bar, and an engaging media carousel."
+                    ]
+                },
+                {
+                    title: "Line Follower Robot using Arduino",
+                    description: [
+                        "Constructed an autonomous robot utilizing Arduino and infrared sensors to accurately detect and follow a predefined path.",
+                        "Showcases a versatile and cost-effective solution for automated navigation tasks."
+                    ]
+                },
+                {
+                    title: "Distance Measuring Device using Arduino",
+                    description: [
+                        "Engineered an Arduino-based device employing ultrasonic sensors for precise distance gauging.",
+                        "Demonstrates a versatile and cost-effective solution applicable in various measurement scenarios."
+                    ]
+                },
+                {
+                    title: "Laser Security System",
+                    description: [
+                        "Implemented a security system providing precise intrusion detection.",
+                        "Offers high reliability and versatility for effectively safeguarding premises."
+                    ]
+                }
+            ],
+            activitiesInterests: [
+                "Successfully managed the Technical Fest (Techblizz), demonstrating strong organizational and team management abilities."
+            ],
+            languages: [
+                "English", "Hindi", "Marathi"
+            ]
+        };
+
+        // ThemeContext.js content
+        const ThemeContext = React.createContext();
+
+        const ThemeProvider = ({ children }) => {
+            const [theme, setTheme] = React.useState(() => {
+                // Check system preference for dark mode
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const savedTheme = localStorage.getItem('theme');
+                return savedTheme ? savedTheme : (prefersDark ? 'dark' : 'light');
+            });
+
+            React.useEffect(() => {
+                const root = document.documentElement;
+                if (theme === 'dark') {
+                    root.classList.add('dark');
+                    root.classList.remove('light');
+                } else {
+                    root.classList.remove('dark');
+                    root.classList.add('light');
+                }
+                localStorage.setItem('theme', theme);
+            }, [theme]);
+
+            const toggleTheme = () => {
+                setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+            };
+
+            return (
+                <ThemeContext.Provider value={{ theme, toggleTheme }}>
+                    {children}
+                </ThemeContext.Provider>
+            );
+        };
+
+        const useTheme = () => {
+            const context = React.useContext(ThemeContext);
+            if (context === undefined) {
+                throw new Error('useTheme must be used within a ThemeProvider');
+            }
+            return context;
+        };
+
+        // NotebookCanvas.js content
+        const NotebookCanvas = () => {
+            const canvasRef = React.useRef(null);
+            const { theme } = useTheme();
+
+            const drawNotebookLines = React.useCallback(() => {
+                const canvas = canvasRef.current;
+                if (!canvas) return;
+                const ctx = canvas.getContext('2d');
+
+                // Set canvas size to match its display size
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+
+                // Get computed styles for dynamic colors
+                const computedStyle = getComputedStyle(document.documentElement);
+                const lineColor = theme === 'light' ? computedStyle.getPropertyValue('--color-notebookLight-lines') : computedStyle.getPropertyValue('--color-notebookDark-lines');
+                const backgroundColor = theme === 'light' ? computedStyle.getPropertyValue('--color-notebookLight-bg') : computedStyle.getPropertyValue('--color-notebookDark-bg');
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+                ctx.fillStyle = backgroundColor;
+                ctx.fillRect(0, 0, canvas.width, canvas.height); // Fill background
+
+                ctx.strokeStyle = lineColor;
+                ctx.lineWidth = 1;
+
+                // Draw horizontal lines
+                const lineHeight = 32; // Corresponds to 2rem from CSS (1rem = 16px)
+                for (let y = lineHeight; y < canvas.height; y += lineHeight) {
+                    ctx.beginPath();
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(canvas.width, y);
+                    ctx.stroke();
+                }
+
+                // Draw vertical margin line (optional, for notebook feel)
+                const marginX = 60; // Adjust as needed
+                ctx.beginPath();
+                ctx.moveTo(marginX, 0);
+                ctx.lineTo(marginX, canvas.height);
+                ctx.stroke();
+
+            }, [theme]);
+
+            React.useEffect(() => {
+                drawNotebookLines(); // Initial draw
+
+                const handleResize = () => {
+                    drawNotebookLines();
+                };
+
+                window.addEventListener('resize', handleResize);
+                return () => {
+                    window.removeEventListener('resize', handleResize);
+                };
+            }, [drawNotebookLines]);
+
+            return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full"></canvas>;
+        };
+
+
+        // Header.js content
+        const Header = ({ name, phone, email }) => {
+            const { theme, toggleTheme } = useTheme();
+
+            return (
+                <header className="relative w-full text-center py-8 px-4 md:px-8 lg:px-12 mt-16 md:mt-20 lg:mt-24">
+                    <button
+                        onClick={toggleTheme}
+                        className="absolute top-4 right-4 md:top-8 md:right-8 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 shadow-md transition-colors duration-300 z-20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        aria-label="Toggle theme"
+                    >
+                        {theme === 'light' ? (
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h1M3 12h1m15.325-4.275l-.707-.707M4.372 19.325l-.707-.707m10.606 0l.707-.707m-13.434 0l-.707.707M12 7a5 5 0 110 10 5 5 0 010-10z" />
+                            </svg>
+                        ) : (
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                            </svg>
+                        )}
+                    </button>
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 dark:text-gray-100 mb-2">
+                        {name}
+                    </h1>
+                    <div className="text-lg md:text-xl text-gray-600 dark:text-gray-300">
+                        <p className="mb-1">{phone}</p>
+                        <p>{email}</p>
+                    </div>
+                </header>
+            );
+        };
+
+        // Summary.js content
+        const Summary = ({ content }) => {
+            return (
+                <section className="mb-12 p-6 md:p-8 rounded-lg shadow-md bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+                    <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-4 border-b-2 border-gray-300 dark:border-gray-600 pb-2">
+                        Summary
+                    </h2>
+                    <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
+                        {content}
+                    </p>
+                </section>
+            );
+        };
+
+        // Education.js content
+        const Education = ({ educationDetails }) => {
+            return (
+                <section className="mb-12 p-6 md:p-8 rounded-lg shadow-md bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+                    <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-4 border-b-2 border-gray-300 dark:border-gray-600 pb-2">
+                        Education
+                    </h2>
+                    <div className="space-y-6">
+                        {educationDetails.map((edu, index) => (
+                            <div key={index} className="text-gray-700 dark:text-gray-200">
+                                <h3 className="text-xl md:text-2xl font-bold mb-1">
+                                    {edu.qualification} - {edu.university}
+                                </h3>
+                                <p className="text-md md:text-lg italic mb-1">{edu.year}</p>
+                                {edu.marks && <p className="text-md md:text-lg">Percentage / Marks: {edu.marks}</p>}
+                                {edu.semesters && (
+                                    <ul className="list-disc list-inside ml-4">
+                                        {Object.entries(edu.semesters).map(([sem, marks]) => (
+                                            <li key={sem}>{sem}: {marks}</li>
+                                        ))}
+                                    </ul>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            );
+        };
+
+        // Experience.js content
+        const Experience = ({ experiences }) => {
+            return (
+                <section className="mb-12 p-6 md:p-8 rounded-lg shadow-md bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+                    <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-4 border-b-2 border-gray-300 dark:border-gray-600 pb-2">
+                        Experience
+                    </h2>
+                    <div className="space-y-8">
+                        {experiences.map((exp, index) => (
+                            <div key={index} className="text-gray-700 dark:text-gray-200">
+                                <h3 className="text-xl md:text-2xl font-bold mb-1">
+                                    {exp.title} at {exp.company}
+                                </h3>
+                                <p className="text-md md:text-lg italic mb-2">{exp.duration}</p>
+                                <ul className="list-disc list-inside ml-4 space-y-1">
+                                    {exp.description.map((point, i) => (
+                                        <li key={i}>{point}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            );
+        };
+
+        // TechnicalSkills.js content
+        const TechnicalSkills = ({ skills }) => {
+            return (
+                <section className="mb-12 p-6 md:p-8 rounded-lg shadow-md bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+                    <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-4 border-b-2 border-gray-300 dark:border-gray-600 pb-2">
+                        Technical Skills
+                    </h2>
+                    <div className="space-y-4">
+                        {Object.entries(skills).map(([category, items], index) => (
+                            <div key={index}>
+                                <h3 className="text-xl md:text-2xl font-bold mb-2 text-gray-800 dark:text-gray-100">
+                                    {category}:
+                                </h3>
+                                <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
+                                    {items.join(', ')}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            );
+        };
+
+        // Projects.js content
+        const Projects = ({ projects }) => {
+            return (
+                <section className="mb-12 p-6 md:p-8 rounded-lg shadow-md bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+                    <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-4 border-b-2 border-gray-300 dark:border-gray-600 pb-2">
+                        Projects
+                    </h2>
+                    <div className="space-y-8">
+                        {projects.map((project, index) => (
+                            <div key={index} className="text-gray-700 dark:text-gray-200">
+                                <h3 className="text-xl md:text-2xl font-bold mb-1">
+                                    {project.title}
+                                </h3>
+                                <ul className="list-disc list-inside ml-4 space-y-1">
+                                    {project.description.map((point, i) => (
+                                        <li key={i}>{point}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            );
+        };
+
+        // ActivitiesInterests.js content
+        const ActivitiesInterests = ({ activities }) => {
+            return (
+                <section className="mb-12 p-6 md:p-8 rounded-lg shadow-md bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+                    <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-4 border-b-2 border-gray-300 dark:border-gray-600 pb-2">
+                        Activities & Interests
+                    </h2>
+                    <ul className="list-disc list-inside ml-4 space-y-2 text-gray-700 dark:text-gray-200">
+                        {activities.map((activity, index) => (
+                            <li key={index}>{activity}</li>
+                        ))}
+                    </ul>
+                </section>
+            );
+        };
+
+        // Languages.js content
+        const Languages = ({ languages }) => {
+            return (
+                <section className="mb-12 p-6 md:p-8 rounded-lg shadow-md bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+                    <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-4 border-b-2 border-gray-300 dark:border-gray-600 pb-2">
+                        Languages
+                    </h2>
+                    <ul className="list-disc list-inside ml-4 space-y-2 text-gray-700 dark:text-gray-200">
+                        {languages.map((lang, index) => (
+                            <li key={index}>{lang}</li>
+                        ))}
+                    </ul>
+                </section>
+            );
+        };
+
+        // App.js content
+        function App() {
+            const { theme } = useTheme();
+
+            return (
+                <div className={`min-h-screen relative font-handwritten ${theme} flex flex-col items-center`}>
+                    <NotebookCanvas />
+                    <div className="relative z-10 w-full max-w-4xl p-6 md:p-8 lg:p-10 bg-transparent">
+                        <Header
+                            name={resumeData.name}
+                            phone={resumeData.phone}
+                            email={resumeData.email}
+                        />
+                        <Summary content={resumeData.summary} />
+                        <Education educationDetails={resumeData.education} />
+                        <Experience experiences={resumeData.experience} />
+                        <TechnicalSkills skills={resumeData.technicalSkills} />
+                        <Projects projects={resumeData.projects} />
+                        <ActivitiesInterests activities={resumeData.activitiesInterests} />
+                        <Languages languages={resumeData.languages} />
+                        <footer className="text-center py-8 text-gray-600 dark:text-gray-400 text-sm">
+                            &copy; {new Date().getFullYear()} {resumeData.name}. All rights reserved.
+                        </footer>
+                    </div>
+                </div>
+            );
+        }
+
+        // Render the App component
+        ReactDOM.createRoot(document.getElementById('root')).render(
+            <React.StrictMode>
+                <ThemeProvider>
+                    <App />
+                </ThemeProvider>
+            </React.StrictMode>
+        );
+    </script>
+</body>
+</html>

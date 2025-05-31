@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en" class="light"> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faiz Muzaffar Ansari - Portfolio</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        darkMode: 'class', // Enable dark mode based on 'dark' class on the HTML element
+        theme: {
+          extend: {
+            fontFamily: {
+              inter: ['Inter', 'sans-serif'], // Define Inter font
+            },
+            colors: {
+              // Custom colors for notebook theme
+              'notebook-paper-light': '#fefefe',
+              'notebook-line-light': '#c0c0c0',
+              'notebook-text-light': '#333333',
+              'notebook-paper-dark': '#2a2a2a',
+              'notebook-line-dark': '#555555',
+              'notebook-text-dark': '#e0e0e0',
+            },
+            boxShadow: {
+              'notebook': '0 4px 12px rgba(0, 0, 0, 0.1)', // Soft shadow for notebook effect
+            }
+          },
+        },
+      }
+    </script>
+
+    <style>
+      /* Ensure Inter font is applied globally if not picked up by Tailwind CDN */
+      body {
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        min-height: 100vh;
+      }
+
+      /* Custom scrollbar styles */
+      body {
+        scrollbar-width: thin;
+        scrollbar-color: #888 #f1f1f1;
+      }
+
+      body::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      body::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+
+      body::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+      }
+
+      body::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+
+      /* Dark mode scrollbar styles */
+      .dark body {
+        scrollbar-color: #555 #333;
+      }
+
+      .dark body::-webkit-scrollbar-track {
+        background: #333;
+      }
+
+      .dark body::-webkit-scrollbar-thumb {
+        background: #555;
+      }
+
+      .dark body::-webkit-scrollbar-thumb:hover {
+        background: #777;
+      }
+
+      /* Base styles for notebook sections (lines and red margin) */
+      .notebook-section-base {
+        background-size: 100% 2rem; /* Height of each line block */
+        position: relative; /* Needed for pseudo-elements */
+      }
+
+      /* Horizontal lines for light mode */
+      .notebook-section-base.light-mode-lines {
+        background-image: repeating-linear-gradient(to bottom, transparent 1.95rem, #c0c0c0 2rem);
+      }
+
+      /* Horizontal lines for dark mode */
+      .notebook-section-base.dark-mode-lines {
+        background-image: repeating-linear-gradient(to bottom, transparent 1.95rem, #555555 2rem);
+      }
+
+      /* Red margin line */
+      .notebook-section-base::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 2rem; /* Adjusted for pl-12, 12 * 0.25rem = 3rem. Let's make it 2rem based on current visual. */
+        width: 1px;
+        height: 100%;
+        background-color: rgb(251 113 133); /* Tailwind's red-400 */
+        opacity: 1;
+      }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
+
+    <header class="fixed top-0 left-0 w-full bg-notebook-paper-light dark:bg-notebook-paper-dark bg-opacity-95 dark:bg-opacity-95 shadow-md z-50 py-4 px-6 md:px-12 flex justify-between items-center rounded-b-lg">
+        <h1 class="text-2xl md:text-3xl font-bold text-notebook-text-light dark:text-notebook-text-dark font-inter">Faiz Muzaffar Ansari</h1>
+        <nav class="hidden md:flex space-x-6">
+            <a href="#about" class="text-notebook-text-light dark:text-notebook-text-dark hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-inter">About</a>
+            <a href="#education" class="text-notebook-text-light dark:text-notebook-text-dark hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-inter">Education</a>
+            <a href="#experience" class="text-notebook-text-light dark:text-notebook-text-dark hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-inter">Experience</a>
+            <a href="#skills" class="text-notebook-text-light dark:text-notebook-text-dark hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-inter">Skills</a>
+            <a href="#projects" class="text-notebook-text-light dark:text-notebook-text-dark hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-inter">Projects</a>
+            <a href="#contact" class="text-notebook-text-light dark:text-notebook-text-dark hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-inter">Contact</a>
+        </nav>
+        <button id="theme-toggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-notebook-text-light dark:text-notebook-text-dark hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200" aria-label="Toggle theme">
+            <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun hidden">
+                <circle cx="12" cy="12" r="4" />
+                <path d="M12 2v2" />
+                <path d="M12 20v2" />
+                <path d="M4.93 4.93l1.41 1.41" />
+                <path d="M17.66 17.66l1.41 1.41" />
+                <path d="M2 12h2" />
+                <path d="M20 12h2" />
+                <path d="M4.93 19.07l1.41-1.41" />
+                <path d="M17.66 6.34l1.41-1.41" />
+            </svg>
+            <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon">
+                <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+            </svg>
+        </button>
+    </header>
+
+    <main class="pt-24 pb-12">
+        <section id="about" class="relative bg-notebook-paper-light dark:bg-notebook-paper-dark text-notebook-text-light dark:text-notebook-text-dark p-6 md:p-10 my-8 mx-auto max-w-4xl pl-12 pr-4 md:pl-16 md:pr-10 rounded-lg shadow-notebook
+                   border border-notebook-line-light dark:border-notebook-line-dark notebook-section-base">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 pb-2 border-b-2 border-notebook-line-light dark:border-notebook-line-dark font-inter text-center">About Me</h2>
+            <p class="text-lg leading-relaxed font-inter">
+                Highly motivated and enthusiastic Engineering student with practical experience in web development and embedded systems. Eager to apply learned skills and contribute to innovative projects, demonstrating a strong foundation in both software and hardware.
+            </p>
+            <div class="mt-6 text-base font-inter">
+                <p><strong>Phone:</strong> 8767191255</p>
+                <p><strong>Email:</strong> ansarifaiz812@gmail.com</p>
+            </div>
+        </section>
+
+        <section id="education" class="relative bg-notebook-paper-light dark:bg-notebook-paper-dark text-notebook-text-light dark:text-notebook-text-dark p-6 md:p-10 my-8 mx-auto max-w-4xl pl-12 pr-4 md:pl-16 md:pr-10 rounded-lg shadow-notebook
+                   border border-notebook-line-light dark:border-notebook-line-dark notebook-section-base">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 pb-2 border-b-2 border-notebook-line-light dark:border-notebook-line-dark font-inter text-center">Education</h2>
+            <div class="space-y-6 font-inter">
+                <div>
+                    <h3 class="text-xl font-semibold">BE in Electronics and Telecomm Engineering</h3>
+                    <p class="text-notebook-text-light/80 dark:text-notebook-text-dark/80">Shivajirao S. Jondhale College of Engineering & Technology</p>
+                    <p class="text-sm italic">Aug 2024 (Expected)</p>
+                    <ul class="list-disc list-inside mt-2 ml-4">
+                        <li>Semester 1: 6.33</li>
+                        <li>Semester 2: 6.40</li>
+                        <li>Semester 3: 6.25</li>
+                        <li>Semester 4: 7.50</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold">H.S.C</h3>
+                    <p class="text-notebook-text-light/80 dark:text-notebook-text-dark/80">Archana Trust English Medium School & Jr. College, Shahapur</p>
+                    <p class="text-sm italic">2022 | 80.67%</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold">S.S.C</h3>
+                    <p class="text-notebook-text-light/80 dark:text-notebook-text-dark/80">Archana Trust English Medium School & Jr. College, Shahapur</p>
+                    <p class="text-sm italic">2020 | 79.80%</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="relative bg-notebook-paper-light dark:bg-notebook-paper-dark text-notebook-text-light dark:text-notebook-text-dark p-6 md:p-10 my-8 mx-auto max-w-4xl pl-12 pr-4 md:pl-16 md:pr-10 rounded-lg shadow-notebook
+                   border border-notebook-line-light dark:border-notebook-line-dark notebook-section-base">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 pb-2 border-b-2 border-notebook-line-light dark:border-notebook-line-dark font-inter text-center">Experience</h2>
+            <div class="space-y-6 font-inter">
+                <div>
+                    <h3 class="text-xl font-semibold">Modern Furniture Works India LLP</h3>
+                    <p class="text-notebook-text-light/80 dark:text-notebook-text-dark/80">Internship | 02/06/2024 - 02/07/2024 (1 Month)</p>
+                    <ul class="list-disc list-inside mt-2 ml-4">
+                        <li>Gained insights into the production processes of metallic beds.</li>
+                        <li>Understood various stages from raw material to finished product.</li>
+                        <li>Learned about quality control and assembly techniques.</li>
+                        <li>Observed and understood the sales department's operations and customer engagement strategies.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold">Accunity Services LLP, Kalyan</h3>
+                    <p class="text-notebook-text-light/80 dark:text-notebook-text-dark/80">Internship | 03/10/2023 - 04/11/2023 (1 Month)</p>
+                    <ul class="list-disc list-inside mt-2 ml-4">
+                        <li>Developed and meticulously maintained user interfaces utilizing HTML, CSS, and JavaScript.</li>
+                        <li>Collaborated effectively with the development team to implement new features and optimize existing functionalities, enhancing user experience.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold">Mumbai Maha Metro, Malad</h3>
+                    <p class="text-notebook-text-light/80 dark:text-notebook-text-dark/80">Internship | 27/12/2023 - 04/01/2024 (1 Week)</p>
+                    <ul class="list-disc list-inside mt-2 ml-4">
+                        <li>Assisted in daily operations and maintenance tasks, gaining valuable hands-on experience.</li>
+                        <li>Acquired practical knowledge of metro rail infrastructure and critical safety protocols.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="relative bg-notebook-paper-light dark:bg-notebook-paper-dark text-notebook-text-light dark:text-notebook-text-dark p-6 md:p-10 my-8 mx-auto max-w-4xl pl-12 pr-4 md:pl-16 md:pr-10 rounded-lg shadow-notebook
+                   border border-notebook-line-light dark:border-notebook-line-dark notebook-section-base">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 pb-2 border-b-2 border-notebook-line-light dark:border-notebook-line-dark font-inter text-center">Technical Skills</h2>
+            <div class="space-y-6 font-inter">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Web Development:</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 rounded-full text-sm">HTML</span>
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 rounded-full text-sm">CSS</span>
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 rounded-full text-sm">JavaScript</span>
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 rounded-full text-sm">Bootstrap</span>
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 rounded-full text-sm">Full Stack Web Development (Certified)</span>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Embedded Systems:</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 rounded-full text-sm">Arduino</span>
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 rounded-full text-sm">ESP32</span>
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 rounded-full text-sm">ESP8266</span>
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 rounded-full text-sm">ARM</span>
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 rounded-full text-sm">PIC</span>
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 rounded-full text-sm">STM32</span>
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 rounded-full text-sm">Raspberry Pi</span>
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 rounded-full text-sm">Embedded Development (Certified)</span>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Programming Languages:</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 rounded-full text-sm">Python</span>
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 rounded-full text-sm">C</span>
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 rounded-full text-sm">JavaScript</span>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Software & Tools:</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 rounded-full text-sm">MPLABX</span>
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 rounded-full text-sm">Keil</span>
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 rounded-full text-sm">STM32CubeIDE</span>
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 rounded-full text-sm">Arduino Software</span>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Other Skills:</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 rounded-full text-sm">AI Enthusiast</span>
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-100 rounded-full text-sm">Linux OS</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="relative bg-notebook-paper-light dark:bg-notebook-paper-dark text-notebook-text-light dark:text-notebook-text-dark p-6 md:p-10 my-8 mx-auto max-w-4xl pl-12 pr-4 md:pl-16 md:pr-10 rounded-lg shadow-notebook
+                   border border-notebook-line-light dark:border-notebook-line-dark notebook-section-base">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 pb-2 border-b-2 border-notebook-line-light dark:border-notebook-line-dark font-inter text-center">Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-inter">
+                <div class="bg-notebook-paper-light/70 dark:bg-notebook-paper-dark/70 p-4 rounded-md shadow-sm border border-notebook-line-light dark:border-notebook-line-dark">
+                    <h3 class="text-xl font-semibold mb-2">Fire Alert System using Arduino</h3>
+                    <p class="text-sm leading-relaxed">Designed and implemented a system utilizing Arduino, IR sensor, and GSM module for real-time fire detection (temperature and smoke). Automated SMS alerts to a predefined number, ensuring rapid response and enhanced fire safety.</p>
+                </div>
+                <div class="bg-notebook-paper-light/70 dark:bg-notebook-paper-dark/70 p-4 rounded-md shadow-sm border border-notebook-line-light dark:border-notebook-line-dark">
+                    <h3 class="text-xl font-semibold mb-2">Netflix Clone Webpage</h3>
+                    <p class="text-sm leading-relaxed">Developed a responsive and visually appealing Netflix clone using front-end technologies like Bootstrap. Features a modern layout with dynamic movie thumbnails, an intuitive navigation bar, and an engaging media carousel.</p>
+                </div>
+                <div class="bg-notebook-paper-light/70 dark:bg-notebook-paper-dark/70 p-4 rounded-md shadow-sm border border-notebook-line-light dark:border-notebook-line-dark">
+                    <h3 class="text-xl font-semibold mb-2">Line Follower Robot using Arduino</h3>
+                    <p class="text-sm leading-relaxed">Constructed an autonomous robot utilizing Arduino and infrared sensors to accurately detect and follow a predefined path. Showcases a versatile and cost-effective solution for automated navigation tasks.</p>
+                </div>
+                <div class="bg-notebook-paper-light/70 dark:bg-notebook-paper-dark/70 p-4 rounded-md shadow-sm border border-notebook-line-light dark:border-notebook-line-dark">
+                    <h3 class="text-xl font-semibold mb-2">Distance Measuring Device using Arduino</h3>
+                    <p class="text-sm leading-relaxed">Engineered an Arduino-based device employing ultrasonic sensors for precise distance gauging. Demonstrates a versatile and cost-effective solution applicable in various measurement scenarios.</p>
+                </div>
+                <div class="bg-notebook-paper-light/70 dark:bg-notebook-paper-dark/70 p-4 rounded-md shadow-sm border border-notebook-line-light dark:border-notebook-line-dark">
+                    <h3 class="text-xl font-semibold mb-2">Laser Security System</h3>
+                    <p class="text-sm leading-relaxed">Implemented a security system providing precise intrusion detection. Offers high reliability and versatility for effectively safeguarding premises.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="relative bg-notebook-paper-light dark:bg-notebook-paper-dark text-notebook-text-light dark:text-notebook-text-dark p-6 md:p-10 my-8 mx-auto max-w-4xl pl-12 pr-4 md:pl-16 md:pr-10 rounded-lg shadow-notebook
+                   border border-notebook-line-light dark:border-notebook-line-dark notebook-section-base">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 pb-2 border-b-2 border-notebook-line-light dark:border-notebook-line-dark font-inter text-center">Contact Me</h2>
+            <p class="text-lg text-center mb-4 font-inter">
+                Feel free to reach out to me!
+            </p>
+            <div class="flex flex-col items-center space-y-4 font-inter">
+                <a href="tel:+918767191255" class="flex items-center space-x-2 text-blue-600 dark:text-blue-400 hover:underline">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                    </svg>
+                    <span>+91 8767191255</span>
+                </a>
+                <a href="mailto:ansarifaiz812@gmail.com" class="flex items-center space-x-2 text-blue-600 dark:text-blue-400 hover:underline">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail">
+                        <rect width="20" height="16" x="2" y="4" rx="2" />
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                    </svg>
+                    <span>ansarifaiz812@gmail.com</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-notebook-paper-light dark:bg-notebook-paper-dark text-notebook-text-light dark:text-notebook-text-dark text-center py-6 mt-12 rounded-t-lg shadow-md font-inter">
+        <p>&copy; 2024 Faiz Muzaffar Ansari. All rights reserved.</p>
+        <p class="text-sm mt-2">Designed with <span role="img" aria-label="heart">❤️</span> and HTML/CSS</p>
+    </footer>
+
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('sun-icon');
+        const moonIcon = document.getElementById('moon-icon');
+        const htmlElement = document.documentElement;
+
+        // Function to apply the theme classes and update icons
+        const applyTheme = (theme) => {
+            if (theme === 'dark') {
+                htmlElement.classList.add('dark');
+                moonIcon.classList.add('hidden');
+                sunIcon.classList.remove('hidden');
+            } else {
+                htmlElement.classList.remove('dark');
+                moonIcon.classList.remove('hidden');
+                sunIcon.classList.add('hidden');
+            }
+            localStorage.setItem('theme', theme); // Persist theme preference
+
+            // Update notebook line styles based on theme
+            document.querySelectorAll('.notebook-section-base').forEach(section => {
+                if (theme === 'dark') {
+                    section.classList.remove('light-mode-lines');
+                    section.classList.add('dark-mode-lines');
+                } else {
+                    section.classList.remove('dark-mode-lines');
+                    section.classList.add('light-mode-lines');
+                }
+            });
+        };
+
+        // Initialize theme from system preference or local storage
+        let currentTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        applyTheme(currentTheme); // Apply initial theme
+
+        // Toggle theme on button click
+        themeToggleBtn.addEventListener('click', () => {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            applyTheme(currentTheme);
+        });
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            currentTheme = e.matches ? 'dark' : 'light';
+            applyTheme(currentTheme);
+        });
+    </script>
+</body>
+</html>

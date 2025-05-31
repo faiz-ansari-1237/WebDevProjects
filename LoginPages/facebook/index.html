@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook - Log In or Sign Up</title>
+    <link rel="icon" href="https://static.xx.fbcdn.net/rsrc.php/yb/r/hBNJ0jI0g4z.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for Facebook-like appearance */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Light gray background */
+            display: flex; /* Use flexbox for overall layout */
+            flex-direction: column; /* Stack content vertically */
+            min-height: 100vh; /* Ensure body takes full viewport height */
+        }
+        .facebook-blue {
+            background-color: #1877f2; /* Facebook blue */
+        }
+        .facebook-blue-hover:hover {
+            background-color: #166fe5; /* Darker blue on hover */
+        }
+        .facebook-green {
+            background-color: #42b72a; /* Facebook green for create new account */
+        }
+        .facebook-green-hover:hover {
+            background-color: #36a420; /* Darker green on hover */
+        }
+        .text-facebook-blue {
+            color: #1877f2;
+        }
+        .shadow-custom {
+            box-shadow: 0 2px 12px rgba(0, 0, 0, .1); /* Custom shadow for card */
+        }
+        /* Ensure main content takes available space and provides space for footer */
+        .main-content-area {
+            flex-grow: 1; /* Allow main content to grow and push footer down */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem; /* Add some padding for smaller screens */
+            padding-bottom: 4rem; /* Increased space for the footer on smaller screens */
+            margin: 6rem 0px;
+        }
+
+        /* Specific styling for the footer to match Facebook's look */
+        .footer-container {
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+            padding: 1rem 0; /* Vertical padding */
+            color: #737373;
+            font-size: 0.75rem; /* text-xs */
+            margin-top: 3rem;
+        }
+        .footer-link {
+            color: #737373;
+            @apply hover:underline;
+        }
+        .language-item {
+            @apply px-2 py-1 hover:bg-gray-100 rounded-md;
+            cursor: pointer;
+            margin-right: 0.5rem; /* Add spacing between language items */
+            border-right: 1px solid #dadde1; /* Add a subtle divider */
+            padding-right: 0.5rem; /* Padding for the divider */
+        }
+        .language-item:last-child {
+            margin-right: 0; /* No margin on the last item */
+            border-right: none; /* No divider on the last item */
+        }
+        .language-item.active {
+            font-weight: 600; /* Semibold for active language */
+            color: #1877f2; /* Facebook blue for active language */
+        }
+        .footer-links-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1rem; /* Vertical and horizontal gap between links */
+            margin-bottom: 0.5rem; /* Space between rows */
+        }
+        .footer-links-row:last-of-type {
+            margin-bottom: 0; /* No margin after the last row */
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content-area">
+        <div class="flex flex-col lg:flex-row items-center justify-center w-full max-w-4xl lg:space-x-8">
+            <div class="text-center lg:text-left mb-8 lg:mb-0 lg:w-1/2">
+                <img src="https://static.xx.fbcdn.net/rsrc.php/y1/r/4lCu2zih0ca.svg" alt="Facebook" class="w-60 mx-auto lg:mx-0 -ml-7 mb-4">
+                <h2 class="text-2xl sm:text-3xl font-normal leading-normal text-gray-700" data-translate-key="tagline">
+                    Connect with friends and the world around you on Facebook.
+                </h2>
+            </div>
+
+            <div class="w-full sm:w-96">
+                <div class="bg-white p-6 rounded-lg shadow-custom">
+                    <form class="space-y-4">
+                        <input
+                            type="text"
+                            placeholder="Email or phone number"
+                            class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-lg"
+                            data-translate-key="emailPlaceholder"
+                        >
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-lg"
+                            data-translate-key="passwordPlaceholder"
+                        >
+                        <button
+                            type="submit"
+                            class="w-full facebook-blue facebook-blue-hover text-white font-bold py-3 rounded-md text-xl transition duration-200"
+                            data-translate-key="loginButton"
+                        >
+                            Log In
+                        </button>
+                    </form>
+
+                    <div class="text-center mt-4 pb-4 border-b border-gray-200">
+                        <a href="https://www.facebook.com/recover/initiate/" class="text-sm text-facebook-blue hover:underline" data-translate-key="forgotPassword">Forgot password?</a>
+                    </div>
+
+                    <div class="text-center mt-6">
+                        <button
+                            type="button"
+                            class="facebook-green facebook-green-hover text-white font-bold py-3 px-5 rounded-md text-lg transition duration-200"
+                            data-translate-key="createAccountButton"
+                        >
+                            Create new account
+                        </button>
+                    </div>
+                </div>
+                <div class="text-center mt-6 text-sm text-gray-600">
+                    <p data-translate-key="createPageText">
+                        <a href="https://www.facebook.com/pages/create/?ref_type=registration_form" class="font-semibold hover:underline" data-translate-key="createPageLink">Create a Page</a> for a celebrity, brand or business.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-container w-full">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap text-xs mb-4 border-b border-gray-200 pb-2">
+                <a href="https://www.facebook.com/?locale=en_GB" class="language-item active" data-locale="en_GB">English (UK)</a>
+                <a href="https://www.facebook.com/?locale=mr_IN" class="language-item" data-locale="mr_IN">मराठी</a>
+                <a href="https://www.facebook.com/?locale=hi_IN" class="language-item" data-locale="hi_IN">हिन्दी</a>
+                <a href="https://www.facebook.com/?locale=ur_PK" class="language-item" data-locale="ur_PK">اردو</a>
+                <a href="https://www.facebook.com/?locale=gu_IN" class="language-item" data-locale="gu_IN">ગુજરાતી</a>
+                <a href="https://www.facebook.com/?locale=kn_IN" class="language-item" data-locale="kn_IN">ಕನ್ನಡ</a>
+                <a href="https://www.facebook.com/?locale=ta_IN" class="language-item" data-locale="ta_IN">தமிழ்</a>
+                <a href="https://www.facebook.com/?locale=te_IN" class="language-item" data-locale="te_IN">తెలుగు</a>
+                <a href="https://www.facebook.com/?locale=ml_IN" class="language-item" data-locale="ml_IN">മലയാളം</a>
+                <a href="https://www.facebook.com/?locale=bn_IN" class="language-item" data-locale="bn_IN">বাংলা</a>
+                <a href="https://www.facebook.com/?locale=es_ES" class="language-item" data-locale="es_ES">Español</a>
+                <a href="https://www.facebook.com/?locale=fr_FR" class="language-item" data-locale="fr_FR">Français</a>
+                <a href="https://www.facebook.com/?locale=de_DE" class="language-item" data-locale="de_DE">Deutsch</a>
+                <a href="https://www.facebook.com/?locale=ar_AR" class="language-item" data-locale="ar_AR">العربية</a>
+                <a href="https://www.facebook.com/?locale=ja_JP" class="language-item" data-locale="ja_JP">日本語</a>
+                <a href="https://www.facebook.com/?locale=zh_CN" class="language-item" data-locale="zh_CN">中文(简体)</a>
+            </div>
+
+            <div class="text-xs mb-4">
+                <div class="footer-links-row">
+                    <a href="https://www.facebook.com/r.php" class="footer-link">Sign Up</a>
+                    <a href="https://www.facebook.com/login/" class="footer-link">Log In</a>
+                    <a href="https://www.messenger.com/" class="footer-link">Messenger</a>
+                    <a href="https://www.facebook.com/lite/" class="footer-link">Facebook Lite</a>
+                    <a href="https://www.facebook.com/watch/" class="footer-link">Video</a>
+                    <a href="https://pay.facebook.com/" class="footer-link">Meta Pay</a>
+                    <a href="https://store.meta.com/" class="footer-link">Meta Store</a>
+                    <a href="https://www.oculus.com/" class="footer-link">Meta Quest</a>
+                    <a href="https://www.ray-ban.com/usa/discover-meta" class="footer-link">Ray-Ban Meta</a>
+                    <a href="https://ai.meta.com/" class="footer-link">Meta AI</a>
+                    <a href="https://www.instagram.com/" class="footer-link">Instagram</a>
+                    <a href="https://www.threads.net/" class="footer-link">Threads</a>
+                </div>
+                <div class="footer-links-row">
+                    <a href="https://www.facebook.com/votinginformationcenter/" class="footer-link">Voting Information Centre</a>
+                    <a href="https://www.facebook.com/privacy/policy/" class="footer-link">Privacy Policy</a>
+                    <a href="https://www.facebook.com/privacy/center/" class="footer-link">Privacy Centre</a>
+                    <a href="https://about.meta.com/" class="footer-link">About</a>
+                    <a href="https://www.facebook.com/business/ads" class="footer-link">Create ad</a>
+                    <a href="https://www.facebook.com/pages/create" class="footer-link">Create Page</a>
+                    <a href="https://developers.facebook.com/" class="footer-link">Developers</a>
+                    <a href="https://www.metacareers.com/" class="footer-link">Careers</a>
+                    <a href="https://www.facebook.com/policies/cookies/" class="footer-link">Cookies</a>
+                    <a href="https://www.facebook.com/ad_choices" class="footer-link">AdChoices</a>
+                    <a href="https://www.facebook.com/policies/terms/" class="footer-link">Terms</a>
+                    <a href="https://www.facebook.com/help/" class="footer-link">Help</a>
+                </div>
+                <div class="footer-links-row">
+                    <a href="https://www.facebook.com/help/contact/260717205012440" class="footer-link">Contact uploading and non-users</a>
+                </div>
+            </div>
+
+            <div class="text-xs">
+                <p>Meta © 2025</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Define translations for key elements on the page
+        const translations = {
+            'en_GB': {
+                tagline: 'Connect with friends and the world around you on Facebook.',
+                emailPlaceholder: 'Email or phone number',
+                passwordPlaceholder: 'Password',
+                loginButton: 'Log In',
+                forgotPassword: 'Forgot password?',
+                createAccountButton: 'Create new account',
+                createPageText: ' for a celebrity, brand or business.',
+                createPageLink: 'Create a Page'
+            },
+            'hi_IN': {
+                tagline: 'Facebook लोगों से जुड़ने और शेयर करने में आपकी मदद करता है.',
+                emailPlaceholder: 'ईमेल या फ़ोन नंबर',
+                passwordPlaceholder: 'पासवर्ड',
+                loginButton: 'लॉग इन करें',
+                forgotPassword: 'पासवर्ड भूल गए?',
+                createAccountButton: 'नया अकाउंट बनाएँ',
+                createPageText: ' के लिए एक पेज बनाएँ।',
+                createPageLink: 'किसी सेलेब्रिटी, ब्रांड या बिज़नेस'
+            },
+            'mr_IN': {
+                tagline: 'Facebook तुम्हाला तुमच्या जीवनातील लोकांशी संपर्क साधण्यात आणि शेअर करण्यात मदत करते.',
+                emailPlaceholder: 'ईमेल किंवा फोन नंबर',
+                passwordPlaceholder: 'पासवर्ड',
+                loginButton: 'लॉग इन करा',
+                forgotPassword: 'पासवर्ड विसरलात?',
+                createAccountButton: 'नवीन खाते तयार करा',
+                createPageText: ' साठी एक पेज तयार करा.',
+                createPageLink: 'एखाद्या सेलिब्रिटी, ब्रँड किंवा व्यवसाया'
+            },
+            'es_ES': {
+                tagline: 'Conecta con amigos y el mundo que te rodea en Facebook.',
+                emailPlaceholder: 'Correo electrónico o número de teléfono',
+                passwordPlaceholder: 'Contraseña',
+                loginButton: 'Iniciar sesión',
+                forgotPassword: '¿Olvidaste tu contraseña?',
+                createAccountButton: 'Crear cuenta nueva',
+                createPageText: ' para una celebridad, marca o negocio.',
+                createPageLink: 'Crear una página'
+            },
+            'fr_FR': {
+                tagline: 'Connectez-vous avec vos amis et le monde qui vous entoure sur Facebook.',
+                emailPlaceholder: 'Adresse e-mail ou numéro de téléphone',
+                passwordPlaceholder: 'Mot de passe',
+                loginButton: 'Se connecter',
+                forgotPassword: 'Mot de passe oublié ?',
+                createAccountButton: 'Créer un nouveau compte',
+                createPageText: ' pour une célébrité, une marque ou une entreprise.',
+                createPageLink: 'Créer une Page'
+            },
+            'de_DE': {
+                tagline: 'Verbinde dich mit Freunden und der Welt um dich herum auf Facebook.',
+                emailPlaceholder: 'E-Mail-Adresse oder Telefonnummer',
+                passwordPlaceholder: 'Passwort',
+                loginButton: 'Anmelden',
+                forgotPassword: 'Passwort vergessen?',
+                createAccountButton: 'Neues Konto erstellen',
+                createPageText: ' für eine Berühmtheit, Marke oder ein Unternehmen.',
+                createPageLink: 'Seite erstellen'
+            },
+            'ar_AR': {
+                tagline: 'تواصل مع الأصدقاء والعالم من حولك على فيسبوك.',
+                emailPlaceholder: 'البريد الإلكتروني أو رقم الهاتف',
+                passwordPlaceholder: 'كلمة السر',
+                loginButton: 'تسجيل الدخول',
+                forgotPassword: 'هل نسيت كلمة السر؟',
+                createAccountButton: 'إنشاء حساب جديد',
+                createPageText: ' لمشاهير أو علامة تجارية أو نشاط تجاري.',
+                createPageLink: 'إنشاء صفحة'
+            },
+            'ja_JP': {
+                tagline: 'Facebookで友達や世界中の人たちとつながろう。',
+                emailPlaceholder: 'メールアドレスまたは電話番号',
+                passwordPlaceholder: 'パスワード',
+                loginButton: 'ログイン',
+                forgotPassword: 'パスワードを忘れた場合',
+                createAccountButton: '新しいアカウントを作成',
+                createPageText: 'のページを作成',
+                createPageLink: '有名人、ブランド、ビジネス'
+            },
+            'zh_CN': {
+                tagline: 'Facebook 助你和亲友保持联系，共同探索世界。',
+                emailPlaceholder: '电子邮箱或手机号',
+                passwordPlaceholder: '密码',
+                loginButton: '登录',
+                forgotPassword: '忘记密码？',
+                createAccountButton: '创建新账号',
+                createPageText: '，为名人、品牌或商家创建主页。',
+                createPageLink: '创建主页'
+            },
+            'ur_PK': {
+                tagline: 'فیس بک پر دوستوں اور اپنے ارد گرد کی دنیا سے جڑیں۔',
+                emailPlaceholder: 'ای میل یا فون نمبر',
+                passwordPlaceholder: 'پاس ورڈ',
+                loginButton: 'لاگ ان کریں',
+                forgotPassword: 'پاس ورڈ بھول گئے؟',
+                createAccountButton: 'نیا اکاؤنٹ بنائیں',
+                createPageText: ' کسی مشہور شخصیت، برانڈ یا کاروبار کے لیے۔',
+                createPageLink: 'ایک صفحہ بنائیں'
+            },
+            'gu_IN': {
+                tagline: 'ફેસબુક પર મિત્રો અને તમારી આસપાસની દુનિયા સાથે કનેક્ટ થાઓ.',
+                emailPlaceholder: 'ઇમેઇલ અથવા ફોન નંબર',
+                passwordPlaceholder: 'પાસવર્ડ',
+                loginButton: 'લોગ ઇન કરો',
+                forgotPassword: 'પાસવર્ડ ભૂલી ગયા?',
+                createAccountButton: 'નવું એકાઉન્ટ બનાવો',
+                createPageText: ' કોઈ સેલિબ્રિટી, બ્રાન્ડ અથવા વ્યવસાય માટે.',
+                createPageLink: 'એક પેજ બનાવો'
+            },
+            'kn_IN': {
+                tagline: 'ಫೇಸ್‌ಬುಕ್‌ನಲ್ಲಿ ಸ್ನೇಹಿತರು ಮತ್ತು ನಿಮ್ಮ ಸುತ್ತಲಿನ ಪ್ರಪಂಚದೊಂದಿಗೆ ಸಂಪರ್ಕ ಸಾಧಿಸಿ.',
+                emailPlaceholder: 'ಇಮೇಲ್ ಅಥವಾ ಫೋನ್ ಸಂಖ್ಯೆ',
+                passwordPlaceholder: 'ಪಾಸ್‌ವರ್ಡ್',
+                loginButton: 'ಲಾಗ್ ಇನ್ ಮಾಡಿ',
+                forgotPassword: 'ಪಾಸ್‌ವರ್ಡ್ ಮರೆತಿದ್ದೀರಾ?',
+                createAccountButton: 'ಹೊಸ ಖಾತೆ ರಚಿಸಿ',
+                createPageText: ' ಸೆಲೆಬ್ರಿಟಿ, ಬ್ರ್ಯಾಂಡ್ ಅಥವಾ ವ್ಯವಹಾರಕ್ಕಾಗಿ.',
+                createPageLink: 'ಪುಟವನ್ನು ರಚಿಸಿ'
+            },
+            'ta_IN': {
+                tagline: 'Facebook இல் நண்பர்கள் மற்றும் உங்களைச் சுற்றியுள்ள உலகத்துடன் இணையுங்கள்.',
+                emailPlaceholder: 'மின்னஞ்சல் அல்லது தொலைபேசி எண்',
+                passwordPlaceholder: 'கடவுச்சொல்',
+                loginButton: 'உள்நுழை',
+                forgotPassword: 'கடவுச்சொல்லை மறந்துவிட்டீர்களா?',
+                createAccountButton: 'புதிய கணக்கை உருவாக்கு',
+                createPageText: ' ஒரு பிரபலத்திற்கான, பிராண்டிற்கான அல்லது வணிகத்திற்கான.',
+                createPageLink: 'ஒரு பக்கத்தை உருவாக்கு'
+            },
+            'te_IN': {
+                tagline: 'Facebookలో స్నేహితులు మరియు మీ చుట్టూ ఉన్న ప్రపంచంతో కనెక్ట్ అవ్వండి.',
+                emailPlaceholder: 'ఇమెయిల్ లేదా ఫోన్ నంబర్',
+                passwordPlaceholder: 'పాస్‌వర్డ్',
+                loginButton: 'లాగిన్ చేయండి',
+                forgotPassword: 'పాస్‌వర్డ్ మర్చిపోయారా?',
+                createAccountButton: 'కొత్త ఖాతాను సృష్టించండి',
+                createPageText: ' ఒక సెలబ్రిటీ, బ్రాండ్ లేదా వ్యాపారం కోసం.',
+                createPageLink: 'పేజీని సృష్టించండి'
+            },
+            'ml_IN': {
+                tagline: 'Facebook-ൽ സുഹൃത്തുക്കളുമായും നിങ്ങളുടെ ചുറ്റുമുള്ള ലോകവുമായും ബന്ധപ്പെടുക.',
+                emailPlaceholder: 'ഇമെയിൽ അല്ലെങ്കിൽ ഫോൺ നമ്പർ',
+                passwordPlaceholder: 'പാസ്‌വേഡ്',
+                loginButton: 'ലോഗിൻ ചെയ്യുക',
+                forgotPassword: 'പാസ്‌വേഡ് മറന്നുപോയോ?',
+                createAccountButton: 'പുതിയ അക്കൗണ്ട് ഉണ്ടാക്കുക',
+                createPageText: ' ഒരു സെലിബ്രിറ്റി, ബ്രാൻഡ് അല്ലെങ്കിൽ ബിസിനസ്സിനായി.',
+                createPageLink: 'ഒരു പേജ് ഉണ്ടാക്കുക'
+            },
+            'bn_IN': {
+                tagline: 'Facebook-এ বন্ধু এবং আপনার চারপাশের বিশ্বের সাথে সংযুক্ত হন।',
+                emailPlaceholder: 'ইমেল বা ফোন নম্বর',
+                passwordPlaceholder: 'পাসওয়ার্ড',
+                loginButton: 'লগ ইন করুন',
+                forgotPassword: 'পাসওয়ার্ড ভুলে গেছেন?',
+                createAccountButton: 'নতুন অ্যাকাউন্ট তৈরি করুন',
+                createPageText: ' একজন সেলিব্রিটি, ব্র্যান্ড বা ব্যবসার জন্য।',
+                createPageLink: 'একটি পেজ তৈরি করুন'
+            }
+        };
+
+        // Function to set the language of the page
+        function setLanguage(locale) {
+            // Update the HTML lang attribute
+            document.documentElement.lang = locale;
+
+            // Remove active class from all language items
+            document.querySelectorAll('.language-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Add active class to the selected language item
+            const activeLanguageItem = document.querySelector(`.language-item[data-locale="${locale}"]`);
+            if (activeLanguageItem) {
+                activeLanguageItem.classList.add('active');
+            }
+
+            // Update text content based on the selected locale
+            for (const key in translations[locale]) {
+                const element = document.querySelector(`[data-translate-key="${key}"]`);
+                if (element) {
+                    if (element.tagName === 'INPUT' && element.hasAttribute('placeholder')) {
+                        element.placeholder = translations[locale][key];
+                    } else if (key === 'createPageText') {
+                        // Special handling for the "Create a Page" paragraph
+                        const createPageLinkElement = element.querySelector('[data-translate-key="createPageLink"]');
+                        if (createPageLinkElement) {
+                            createPageLinkElement.textContent = translations[locale]['createPageLink'];
+                            element.innerHTML = createPageLinkElement.outerHTML + translations[locale]['createPageText'];
+                        }
+                    }
+                    else {
+                        element.textContent = translations[locale][key];
+                    }
+                }
+            }
+        }
+        
+
+        // Add event listeners to language items
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.language-item[data-locale]').forEach(item => {
+                item.addEventListener('click', (event) => {
+                    event.preventDefault(); // Prevent default link behavior
+                    const locale = item.getAttribute('data-locale');
+                    setLanguage(locale);
+                });
+            });
+
+            // Set default language on load (e.g., English UK)
+            setLanguage('en_GB');
+        });
+    </script>
+</body>
+</html>
