@@ -1,0 +1,741 @@
+/* Custom CSS for Netflix-like theme */
+:root {
+    --netflix-red: #e50914;
+    --netflix-dark: #000000; /* Changed to pure black for sections */
+    --netflix-light-dark: #303030;
+    --text-color: #ffffff;
+    --secondary-text-color: #a0a0a0;
+    --section-bg: #222222; /* Background for feature sections */
+    --border-color: #444;
+}
+
+body {
+    font-family: 'Inter', sans-serif; /* Using Inter as per instructions */
+    background-color: var(--netflix-dark);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    min-height: 100vh; /* Ensure body takes full height */
+}
+
+/* Utility classes for rounded corners */
+.rounded-lg { border-radius: 0.5rem; }
+.rounded-xl { border-radius: 0.75rem; }
+.rounded-full { border-radius: 9999px; }
+
+/* Section Separator */
+.section-separator {
+    height: 8px;
+    background-color: var(--section-bg);
+    border: none;
+    margin: 0;
+}
+
+/* Splash Page Styling (for index.html) */
+#splash-page {
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.8) 100%),
+                url('https://assets.nflxext.com/ffe/siteui/vlv3/914ad279-199e-4095-9c10-2409dc9e5e1b/web/IN-en-20250519-TRIFECTA-perspective_8f1ca896-9e49-4a4e-90f0-22fc49650bd9_small.jpg') no-repeat center center/cover;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    position: relative; /* Needed for absolute navbar */
+}
+
+#splash-page .navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: transparent;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
+#splash-page .navbar .logo {
+    color: var(--netflix-red);
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#splash-page .navbar .btn-sign-in {
+    background-color: var(--netflix-red);
+    color: var(--text-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+#splash-page .navbar .btn-sign-in:hover {
+    background-color: #f40612;
+}
+
+#splash-page .hero-content {
+    max-width: 950px;
+    margin-top: 80px; /* Adjust for navbar */
+    z-index: 5;
+}
+
+#splash-page h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+#splash-page p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+#splash-page .email-form {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+#splash-page .email-form input {
+    padding: 1rem 1.5rem;
+    border: 1px solid var(--netflix-light-dark);
+    background-color: rgba(45, 45, 45, 0.8);
+    color: var(--text-color);
+    width: 100%;
+    max-width: 400px;
+    font-size: 1rem;
+}
+
+#splash-page .email-form .btn-get-started {
+    background-color: var(--netflix-red);
+    color: var(--text-color);
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    min-width: 180px;
+}
+
+#splash-page .email-form .btn-get-started:hover {
+    background-color: #f40612;
+}
+
+/* Feature Sections Styling */
+.feature-section {
+    background-color: var(--netflix-dark);
+    padding: 70px 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 8px solid var(--section-bg);
+}
+
+.feature-section:last-of-type {
+    border-bottom: none; /* No border for the last one before FAQ */
+}
+
+.feature-section .content {
+    max-width: 50%;
+    text-align: left;
+}
+
+.feature-section .media {
+    max-width: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.feature-section .media img {
+    width: 100%;
+    height: auto;
+    z-index: 1;
+}
+
+.feature-section .media video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 73%; /* Adjust based on image overlay */
+    height: 54%; /* Adjust based on image overlay */
+    object-fit: cover;
+}
+
+.feature-section h2 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.feature-section p {
+    font-size: 1.6rem;
+    line-height: 1.4;
+}
+
+/* FAQ Section Styling */
+.faq-section {
+    background-color: var(--netflix-dark);
+    padding: 70px 45px;
+    text-align: center;
+    border-bottom: 8px solid var(--section-bg);
+}
+
+.faq-section h2 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
+.faq-accordion {
+    max-width: 815px;
+    margin: 0 auto;
+}
+
+.faq-accordion .accordion-item {
+    margin-bottom: 10px;
+    border: none;
+    background-color: var(--netflix-light-dark);
+    border-radius: 0;
+}
+
+.faq-accordion .accordion-button {
+    background-color: var(--netflix-light-dark);
+    color: var(--text-color);
+    font-size: 1.5rem;
+    font-weight: 400;
+    padding: 1.25rem 1.5rem;
+    border-radius: 0;
+    box-shadow: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.faq-accordion .accordion-button:not(.collapsed) {
+    background-color: var(--netflix-light-dark);
+    color: var(--text-color);
+}
+
+.faq-accordion .accordion-button::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    transform: rotate(0deg);
+    transition: transform 0.2s ease-in-out;
+}
+
+.faq-accordion .accordion-button:not(.collapsed)::after {
+    transform: rotate(180deg);
+}
+
+.faq-accordion .accordion-body {
+    background-color: var(--netflix-light-dark);
+    color: var(--text-color);
+    font-size: 1.25rem;
+    padding: 1.5rem;
+    text-align: left;
+}
+
+/* New Call to Action Section Styling */
+#call-to-action-section {
+    background-color: var(--netflix-dark); /* Match body/feature section background */
+    padding: 70px 45px; /* Consistent padding with other sections */
+    border-bottom: 8px solid var(--section-bg); /* Separator before footer */
+}
+
+#call-to-action-section p {
+    font-size: 1.5rem; /* Matches existing splash page paragraph size */
+    margin-bottom: 2rem; /* Consistent spacing */
+}
+
+#call-to-action-section .email-form {
+    max-width: 950px; /* Constrain width like splash hero */
+    width: 100%;
+    margin: 0 auto; /* Center the form */
+}
+
+/* Specific styling for input and button within this section to match the image */
+#call-to-action-section .email-form input {
+    /* The image shows a very dark, almost black input background */
+    background-color: #1a1a1a; /* Darker than var(--netflix-light-dark) */
+    border: 1px solid #444; /* Subtle border */
+    color: var(--text-color);
+    padding: 1rem 1.5rem; /* Ensure consistent padding */
+}
+
+#call-to-action-section .email-form input::placeholder {
+    color: var(--secondary-text-color); /* Lighter placeholder text */
+}
+
+#call-to-action-section .email-form .btn-get-started {
+    background-color: var(--netflix-red); /* Solid Netflix red */
+    color: var(--text-color);
+    border: none; /* No border for the button */
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    min-width: 250px;
+}
+
+#call-to-action-section .email-form .btn-get-started:hover {
+    background-color: #f40612; /* Slightly darker red on hover */
+}
+
+
+/* Footer Styling */
+.footer {
+    background-color: var(--netflix-dark);
+    padding: 70px 45px;
+    color: var(--secondary-text-color);
+}
+
+.footer p {
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+
+.footer .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.footer .footer-links a {
+    color: var(--secondary-text-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    width: 25%; /* 4 columns */
+}
+
+.footer .footer-links a:hover {
+    text-decoration: underline;
+}
+
+.footer .language-select {
+    background-color: var(--netflix-dark);
+    color: var(--text-color);
+    border: 1px solid var(--secondary-text-color);
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Auth Page Styling (for signin.html) */
+#auth-page {
+    background: url('https://assets.nflxext.com/ffe/siteui/vlv3/914ad279-199e-4095-9c10-2409dc9e5e1b/web/IN-en-20250519-TRIFECTA-perspective_8f1ca896-9e49-4a4e-90f0-22fc49650bd9_small.jpg') no-repeat center center/cover;
+    position: relative; /* Needed for the pseudo-element overlay */
+    min-height: 100vh; /* Ensure it takes full height */
+    display: flex;
+    flex-direction: column; /* Align items vertically */
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #000000; /* Solid black background */
+}
+
+/* Navbar specific to auth page */
+.auth-navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: transparent;
+    padding: 1rem 2rem;
+    z-index: 2; /* Ensure navbar is above the overlay */
+}
+
+.auth-navbar .logo {
+    color: var(--netflix-red);
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Add a fully opaque overlay to the auth-page to darken the background image */
+#auth-page::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); /* More opaque overlay */
+    z-index: 0; /* Behind the content of auth-page */
+}
+
+#auth-page .auth-container {
+    position: relative; /* Ensure container is above pseudo-element overlay */
+    z-index: 1;
+    background-color: rgba(0,0,0,0.85); /* Slightly more opaque background for the form box itself */
+    padding: 4rem;
+    border-radius: 0.5rem;
+    max-width: 450px;
+    width: 100%;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+#auth-page h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+#auth-page .form-control {
+    background-color: var(--netflix-light-dark);
+    border: 1px solid var(--netflix-light-dark);
+    color: var(--text-color);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+#auth-page .form-control::placeholder {
+    color: var(--secondary-text-color);
+}
+
+#auth-page .btn-primary {
+    background-color: var(--netflix-red);
+    border: none;
+    padding: 1rem 1.25rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    width: 100%;
+    margin-top: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+#auth-page .btn-primary:hover {
+    background-color: #f40612;
+}
+
+#auth-page .form-footer {
+    margin-top: 1.5rem;
+    color: var(--secondary-text-color);
+}
+
+#auth-page .form-footer a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+#auth-page .form-footer a:hover {
+    text-decoration: underline;
+}
+
+#auth-page .toggle-link {
+    cursor: pointer;
+    color: var(--text-color);
+    text-decoration: underline;
+    margin-left: 5px;
+}
+
+#auth-page .error-message {
+    color: var(--netflix-red);
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+/* Main Content Page Styling (for browse.html) */
+#main-content {
+    background-color: var(--netflix-dark); /* Solid black background */
+    min-height: 100vh; /* Ensure it takes full height */
+    padding-bottom: 50px; /* Space for potential footer */
+}
+
+#main-content .navbar {
+    background-color: var(--netflix-dark);
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--netflix-light-dark);
+}
+
+#main-content .navbar .logo {
+    color: var(--netflix-red);
+    font-size: 2rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#main-content .navbar .nav-link {
+    color: var(--secondary-text-color);
+    font-weight: 500;
+    margin-right: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+#main-content .navbar .nav-link:hover,
+#main-content .navbar .nav-link.active {
+    color: var(--text-color);
+}
+
+#main-content .navbar .user-profile {
+    cursor: pointer;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    margin-left: 1rem;
+}
+
+#main-content .hero-movie {
+    position: relative;
+    height: 60vh;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.8) 100%),
+                url('https://placehold.co/1920x600/000000/FFFFFF?text=Hero+Movie+Background') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    padding: 0 4rem;
+    margin-bottom: 2rem;
+}
+
+#main-content .hero-movie-content {
+    max-width: 600px;
+    z-index: 1;
+}
+
+#main-content .hero-movie h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+#main-content .hero-movie p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+
+#main-content .hero-movie .btn {
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 0.25rem;
+    margin-right: 1rem;
+}
+
+#main-content .hero-movie .btn-play {
+    background-color: var(--text-color);
+    color: var(--netflix-dark);
+    border: none;
+}
+
+#main-content .hero-movie .btn-info {
+    background-color: rgba(109, 109, 110, 0.7);
+    color: var(--text-color);
+    border: none;
+}
+
+/* Movie Rows */
+.movie-row {
+    margin-bottom: 2rem;
+    padding: 0 4rem;
+}
+
+.movie-row h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.movie-row .movie-card {
+    background-color: var(--netflix-light-dark);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    margin-right: 10px; /* Space between cards */
+    flex-shrink: 0; /* Prevent cards from shrinking */
+    width: 200px; /* Fixed width for cards */
+    height: 120px; /* Fixed height for cards */
+}
+
+.movie-row .movie-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0,0,0,0.7);
+    z-index: 10; /* Bring hovered card to front */
+}
+
+.movie-row .movie-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.movie-row .d-flex {
+    overflow-x: auto; /* Enable horizontal scrolling for movie cards */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    padding-bottom: 10px; /* Space for scrollbar */
+}
+
+/* Hide scrollbar for aesthetic purposes */
+.movie-row .d-flex::-webkit-scrollbar {
+    height: 8px;
+}
+
+.movie-row .d-flex::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+}
+
+.movie-row .d-flex::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .feature-section {
+        flex-direction: column;
+        text-align: center;
+    }
+    .feature-section.reverse {
+        flex-direction: column;
+    }
+    .feature-section .content,
+    .feature-section .media {
+        max-width: 100%;
+        padding: 0 20px;
+    }
+    .feature-section .media {
+        margin-top: 30px;
+    }
+    .feature-section h2 {
+        font-size: 2.5rem;
+    }
+    .feature-section p {
+        font-size: 1.3rem;
+    }
+    .faq-section h2 {
+        font-size: 2.5rem;
+    }
+    .faq-accordion .accordion-button {
+        font-size: 1.25rem;
+    }
+    .faq-accordion .accordion-body {
+        font-size: 1rem;
+    }
+    .footer .footer-links a {
+        width: 33%; /* 3 columns */
+    }
+}
+
+@media (max-width: 768px) {
+    #splash-page h1 {
+        font-size: 2.5rem;
+    }
+    #splash-page p {
+        font-size: 1.2rem;
+    }
+    #splash-page .email-form .btn-get-started {
+        font-size: 1.2rem;
+        padding: 0.8rem 1.5rem;
+        width: 100%;
+    }
+    #splash-page .email-form input {
+        max-width: 100%;
+    }
+    #auth-page .auth-container {
+        padding: 2rem;
+    }
+    #main-content .navbar {
+        padding: 1rem;
+    }
+    #main-content .hero-movie {
+        padding: 0 2rem;
+        height: 50vh;
+    }
+    #main-content .hero-movie h1 {
+        font-size: 2.5rem;
+    }
+    #main-content .hero-movie p {
+        font-size: 1rem;
+    }
+    .movie-row {
+        padding: 0 2rem;
+    }
+    .movie-row .movie-card {
+        width: 150px;
+        height: 90px;
+    }
+    .footer .footer-links a {
+        width: 50%; /* 2 columns */
+    }
+}
+
+@media (max-width: 576px) {
+    #splash-page .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem;
+    }
+    #splash-page .navbar .btn-sign-in {
+        margin-top: 10px;
+    }
+    #splash-page .hero-content {
+        margin-top: 120px;
+    }
+    #splash-page h1 {
+        font-size: 2rem;
+    }
+    #splash-page p {
+        font-size: 1rem;
+    }
+    #splash-page .email-form {
+        flex-direction: column;
+    }
+    #main-content .navbar .logo {
+        font-size: 1.5rem;
+    }
+    #main-content .navbar .nav-link {
+        margin-right: 0.8rem;
+    }
+    #main-content .hero-movie h1 {
+        font-size: 2rem;
+    }
+    #main-content .hero-movie p {
+        font-size: 0.9rem;
+    }
+    #main-content .hero-movie .btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
+    }
+    .movie-row .movie-card {
+        width: 120px;
+        height: 70px;
+    }
+    .feature-section {
+        padding: 50px 20px;
+    }
+    .feature-section h2 {
+        font-size: 2rem;
+    }
+    .feature-section p {
+        font-size: 1.1rem;
+    }
+    .faq-section {
+        padding: 50px 20px;
+    }
+    .faq-section h2 {
+        font-size: 2rem;
+    }
+    .faq-accordion .accordion-button {
+        font-size: 1.1rem;
+    }
+    .faq-accordion .accordion-body {
+        font-size: 0.9rem;
+    }
+    .footer {
+        padding: 50px 20px;
+    }
+    .footer .footer-links a {
+        width: 100%; /* 1 column */
+    }
+}
