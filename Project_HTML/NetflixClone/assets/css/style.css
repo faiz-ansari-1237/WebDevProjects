@@ -490,7 +490,7 @@ body {
     position: relative;
     height: 60vh;
     background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.8) 100%),
-                url('https://placehold.co/1920x600/000000/FFFFFF?text=Hero+Movie+Background') no-repeat center center/cover;
+                url('/assets/images/netflixmoviecover.avif') no-repeat center center/cover;
     display: flex;
     align-items: center;
     padding: 0 4rem;
